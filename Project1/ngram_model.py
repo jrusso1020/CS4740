@@ -13,12 +13,21 @@ class LMmodel():
     self.unigram_dist = None
     self.bigram_dist = None
 
+  # strip the header from the news articles
+  def strip_newsgroup_header(self, text):
+    #TODO: remove beginning email nonsense
 
   # Parse the corpus from the given directory
   # Remove beginnings of files
   # remove extraneous punction and add start and stop tokens
-  def parse_files():
-    for filename in os.listdir(dir_path):
+  def parse_files(self):
+    for filename in os.listdir(self.dir_path):
+      if filename.endswith(".txt"):
+        with open(self.dir_path + filename, 'r') as article:
+          string = article.read()
+          #TODO: need to preprocess file, add start and end sentence markers, remove weird characters, remove weird start
+        break
+
 
   #compute the unsmoothed unigram probability distributions
   def unigram(self, tokens):
@@ -45,7 +54,7 @@ class LMmodel():
 
     bigram_freq = {token: defaultdict(int) for token in total_tokens}
     for i, token in enumerate(tokens[:-1]):
-      bigram_freq[token][tokens[i+1]] + = 1
+      bigram_freq[token][tokens[i+1]] += 1
 
     prob_distribution = bigram_freq
     key_pairs = bigram_freq.items()
@@ -57,14 +66,38 @@ class LMmodel():
 
     self.bigram_dist = freq_dict
 
+  #pick the next token for the generated sentence
+  def pick_token(self, tokens, ngram_dist):
+    #TODO: need to pick next word
+    pass
+
   #generate a sentence using the type of ngram
   def sentence_generator(self, ngram):
+    if ngram == 1:
+      ngram_dist = self.unigram_dist
+    else:
+      ngram_dist = self.bigram_dist
+
+    generated_sentence = []
+
+    sentence_tokens = [self.start_token]
+
+    token = self.pick_token(sentence_tokens, ngram_dist)
+    while token != self.end_token:
+      if ngram > 1:
+        del sentence_tokens[0]
+        sentence_tokens.append(token)
+      generated_sentence.append(token)
+      word = self.pick_token(sentence_tokens, ngram_dist)
+
+    print(' '.join(generated_sentence))
 
 
 def main():
   dir_path = sys.argv[1]
 
   model = LMmodel(dir_path)
+  model.parse_files()
 
 
 
