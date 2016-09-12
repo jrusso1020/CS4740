@@ -2,6 +2,7 @@ import sys
 import nltk
 import os
 import numpy as np
+import re
 from collections import Counter, defaultdict
 
 
@@ -9,11 +10,13 @@ from collections import Counter, defaultdict
 class LMmodel():
   def __init__(self, dir_path):
     self.dir_path = dir_path
-    self.start_token = "<<s>>"
-    self.end_token = "<</s>>"
+    self.start_token = "BEGIN"
+    self.end_token = "END"
     self.unknown_token = "<<u>>"
     self.unigram_dist = None
     self.bigram_dist = None
+    self.texts = []
+    self.tokens = []
 
   # strip the header from the news articles
   def strip_newsgroup_header(self, text):
@@ -22,14 +25,46 @@ class LMmodel():
   # Parse the corpus from the given directory
   # Remove beginnings of files
   # remove extraneous punction and add start and stop tokens
-  def parse_files(self):
-    for filename in os.listdir(self.dir_path):
-      if filename.endswith(".txt"):
-        with open(self.dir_path + filename, 'r') as article:
-          string = article.read()
-          #TODO: need to preprocess file, add start and end sentence markers, remove weird characters, remove weird start
-        break
 
+    if text.find("Subject :")!=-1:
+      text = text[text.find("Subject :")+len("Subject :"):]
+
+
+
+  # regex used for stripping non-necessary characters
+    regex = re.compile('[^a-zA-Z.!? ]')
+    puncRegex = re.compile('[!?]')
+    parsedText= regex.sub("",text)
+    parsedText = puncRegex.sub(".",parsedText)
+    parsedText = parsedText.lower()
+
+    return parsedText
+
+  def parse_files(self):
+    for i in xrange (0,len(os.listdir(self.dir_path))):
+      filename = os.listdir(self.dir_path)[i]
+      #TODO check for .txt ""
+      if True:
+        with open(self.dir_path + '/'+filename, 'r') as article:
+          string = article.read()
+
+          #TODO: need to preprocess file, add start and end sentence markers, remove weird characters, remove weird start
+          parsedText = self.strip_newsgroup_header(string)
+          self.texts.append(parsedText)
+        
+
+
+  #tokenize the corpus 
+  def tokenize(self):
+    sentences = []
+    for text in self.texts:
+        sentences = sentences + nltk.tokenize.sent_tokenize(text)
+        
+
+    for sentence in sentences:
+      regex = re.compile('[.]')
+      parsedSentence = self.start_token +" " +regex.sub(" "+self.end_token+" ",sentence)
+      self.tokens = self.tokens + nltk.tokenize.word_tokenize(parsedSentence)
 
   #compute the unsmoothed unigram probability distributions
   def unigram(self, tokens):
@@ -43,7 +78,7 @@ class LMmodel():
     key_pairs = unigram_freq.items()
 
     for token, freq in key_pairs:
-      prob_distribution[token] = freq / total_tokens
+      prob_distribution[token] = float(freq) / float(total_tokens)
 
     self.unigram_dist = prob_distribution
 
@@ -55,8 +90,10 @@ class LMmodel():
     total_tokens[self.end_token] -= 1
 
     bigram_freq = {token: defaultdict(int) for token in total_tokens}
+
     for i, token in enumerate(tokens[:-1]):
       bigram_freq[token][tokens[i+1]] += 1
+
 
     prob_distribution = bigram_freq
     key_pairs = bigram_freq.items()
@@ -64,22 +101,24 @@ class LMmodel():
     for token, freq_dict in key_pairs:
       freq_dict_key_pairs = freq_dict.items()
       for token_before, freq in freq_dict_key_pairs:
-        freq_dict[token_before] = freq / total_tokens[token]
+        freq_dict[token_before] = float(freq) / float(total_tokens[token])
 
-    self.bigram_dist = freq_dict
+    self.bigram_dist = prob_distribution
 
   #pick the next token for the generated sentence
   def pick_token(self, tokens, ngram_dist, ngram):
     if ngram == 1:
       keys = ngram_dist.keys()
       values = ngram_dist.values()
+      
 
       token = np.random.choice(keys, p=values)
-
+      while token == self.start_token:
+        token = np.random.choice(keys,p=values)
       return token
     else:
-      keys = ngram_dist[sentence_tokens[len(sentence_tokens) - 1]].keys()
-      values = ngram_dist[sentence_tokens[len(sentence_tokens) - 1]].values()
+      keys = ngram_dist[tokens[len(tokens) - 1]].keys()
+      values = ngram_dist[tokens[len(tokens) - 1]].values()
 
       token = np.random.choice(keys, p=values)
 
@@ -96,22 +135,27 @@ class LMmodel():
 
     sentence_tokens = [self.start_token]
 
-    token = self.pick_token(sentence_tokens, ngram_dist)
+    token = self.pick_token(sentence_tokens, ngram_dist,ngram)
+    
     while token != self.end_token:
       if ngram > 1:
         del sentence_tokens[0]
         sentence_tokens.append(token)
       generated_sentence.append(token)
-      word = self.pick_token(sentence_tokens, ngram_dist)
+      token = self.pick_token(sentence_tokens, ngram_dist, ngram)
 
     print(' '.join(generated_sentence))
 
 
 def main():
   dir_path = sys.argv[1]
-
+  #nltk.download()
   model = LMmodel(dir_path)
   model.parse_files()
+  model.tokenize()
+  model.unigram(model.tokens)
+  model.bigram(model.tokens)
+  model.sentence_generator(1)
 
 
 
