@@ -1,10 +1,11 @@
 import sys
 import nltk
+import os
 
 
 class LMmodel():
-  def __init__(self, file_path):
-    self.file_path = file_path
+  def __init__(self, dir_path):
+    self.dir_path = dir_path
     self.start_token = "<<s>>"
     self.end_token = "<</s>>"
     self.unknown_token = "<<u>>"
@@ -14,9 +15,9 @@ class LMmodel():
 
 
 def main():
-  file_path = sys.argv[1]
+  dir_path = sys.argv[1]
 
-  model = LMmodel(file_path)
+  model = LMmodel(dir_path)
 
 
 
