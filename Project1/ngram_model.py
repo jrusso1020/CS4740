@@ -1,7 +1,9 @@
 import sys
 import nltk
 import os
+import numpy as np
 from collections import Counter, defaultdict
+
 
 
 class LMmodel():
@@ -67,9 +69,21 @@ class LMmodel():
     self.bigram_dist = freq_dict
 
   #pick the next token for the generated sentence
-  def pick_token(self, tokens, ngram_dist):
-    #TODO: need to pick next word
-    pass
+  def pick_token(self, tokens, ngram_dist, ngram):
+    if ngram == 1:
+      keys = ngram_dist.keys()
+      values = ngram_dist.values()
+
+      token = np.random.choice(keys, p=values)
+
+      return token
+    else:
+      keys = ngram_dist[sentence_tokens[len(sentence_tokens) - 1]].keys()
+      values = ngram_dist[sentence_tokens[len(sentence_tokens) - 1]].values()
+
+      token = np.random.choice(keys, p=values)
+
+      return token
 
   #generate a sentence using the type of ngram
   def sentence_generator(self, ngram):
