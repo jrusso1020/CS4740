@@ -3,6 +3,7 @@ import nltk
 import os
 import numpy as np
 import re
+import math
 from collections import Counter, defaultdict
 
 
@@ -12,7 +13,7 @@ class LMmodel():
     self.dir_path = dir_path
     self.start_token = "BEGIN"
     self.end_token = "END"
-    self.unknown_token = "<<u>>"
+    self.unknown_token = "UNK"
     self.unigram_dist = None
     self.bigram_dist = None
     self.texts = []
@@ -147,6 +148,37 @@ class LMmodel():
     print(' '.join(generated_sentence))
 
 
+    #compute the perplexity of our language model on a given test set using an n-gram model
+  def perplexity(self, ngram):
+    runningSum = 0 
+    if ngram == 1:
+      for token in self.tokens:
+        runningSum = runningSum - math.log(self.unigram_dist[token])
+
+      return math.exp(runningSum/len(self.tokens))
+    numTokens = 0 
+    if ngram ==2:
+      for i in xrange(0,len(self.tokens)):
+        token = self.tokens[i]
+        if token != self.start_token:
+          runningSum = runningSum - math.log(self.bigram_dist[self.tokens[i-1]][token])
+          numTokens = numTokens + 1
+      return math.exp(runningSum/numTokens)
+
+
+
+  #Replace every first occurence of a token with the unknown symbol
+  def replaceFirstSeen(self):
+    seenWords = {}
+    for i in xrange(0,len(self.tokens)):
+      token = self.tokens[i]
+      if token not in seenWords:
+        seenWords[token] = 1
+        self.tokens[i] = self.unknown_token
+
+
+
+
 def main():
   dir_path = sys.argv[1]
   #nltk.download()
@@ -155,7 +187,10 @@ def main():
   model.tokenize()
   model.unigram(model.tokens)
   model.bigram(model.tokens)
-  model.sentence_generator(1)
+  print model.perplexity(2)
+
+
+
 
 
 
