@@ -18,6 +18,10 @@ class LMmodel():
     self.bigram_dist = None
     self.texts = []
     self.tokens = []
+    self.modProbs = {}
+    self.topic = ""
+    self.testingTokens = []
+    self.testingTexts = []
 
   # strip the header from the news articles
   def strip_newsgroup_header(self, text):
@@ -40,6 +44,43 @@ class LMmodel():
     parsedText = parsedText.lower()
 
     return parsedText
+
+
+
+  #split training data into training and test data for validation, and tokenize both sets at the same time 
+  def parse_files_split(self,percentage):
+    files = os.listdir(self.dir_path)
+    trainFiles = list(files[0:round(percentage*len(files))])
+    testFiles = list(files[round(percentage*len(files)):])
+    for file in trainFiles:
+      with open(self.dir_path + '/'+file, 'r') as article:
+          string = article.read()
+          parsedText = self.strip_newsgroup_header(string)
+          self.texts.append(parsedText)
+    self.tokenize()
+
+    for file in testFiles:
+      with open(self.dir_path + '/'+file, 'r') as article:
+          string = article.read()
+          parsedText = self.strip_newsgroup_header(string)
+          self.testingTexts.append(parsedText)
+    sentences = []
+    for text in self.testingTexts:
+        sentences = sentences + nltk.tokenize.sent_tokenize(text)
+        
+
+    for sentence in sentences:
+      regex = re.compile('[.]')
+      parsedSentence = self.start_token +" " +regex.sub(" "+self.end_token+" ",sentence)
+      self.testingTokens = self.testingTokens + nltk.tokenize.word_tokenize(parsedSentence)
+
+
+
+    
+
+
+
+
 
   def parse_files(self):
     for i in xrange (0,len(os.listdir(self.dir_path))):
@@ -149,45 +190,198 @@ class LMmodel():
 
 
     #compute the perplexity of our language model on a given test set using an n-gram model
-  def perplexity(self, ngram):
+  def perplexity(self, ngram,textTokens):
     runningSum = 0 
     if ngram == 1:
-      for token in self.tokens:
+      for token in textTokens:
         runningSum = runningSum - math.log(self.unigram_dist[token])
 
-      return math.exp(runningSum/len(self.tokens))
+      return math.exp(runningSum/len(textTokens))
     numTokens = 0 
     if ngram ==2:
-      for i in xrange(0,len(self.tokens)):
-        token = self.tokens[i]
+      for i in xrange(0,len(textTokens)):
+        token = textTokens[i]
         if token != self.start_token:
-          runningSum = runningSum - math.log(self.bigram_dist[self.tokens[i-1]][token])
+          if (textTokens[i-1],token) not in self.modProbs:
+            runningSum = runningSum-math.log(self.modProbs[("","")])
+
+          else:
+            runningSum = runningSum - math.log(self.modProbs[(textTokens[i-1],token)])
           numTokens = numTokens + 1
       return math.exp(runningSum/numTokens)
 
 
 
-  #Replace every first occurence of a token with the unknown symbol
+  #Replace every word that occurs once with unknown symbol
   def replaceFirstSeen(self):
-    seenWords = {}
+    wordFreq = Counter(self.tokens)
+    
     for i in xrange(0,len(self.tokens)):
       token = self.tokens[i]
-      if token not in seenWords:
-        seenWords[token] = 1
+      if wordFreq[token] == 1:
         self.tokens[i] = self.unknown_token
+
+
+  def goodTuring(self,T):
+    #Data structure for bigram counts and bin counts 
+    counts = {}
+    countOfCounts = {}
+
+    #Compute frequencey of each bigram
+    for i in xrange(0,len(self.tokens)-1):
+      key = (self.tokens[i],self.tokens[i+1])
+      if key in counts:
+        counts[key] = counts[key] + 1
+      else:
+        counts[key] = 1
+
+
+    #compute N
+    totalBigrams = 0
+    for key in counts:
+      totalBigrams = totalBigrams + counts[key]
+   
+
+    #Compute N_i for each possible i 
+    for key in counts:
+      if counts[key] in countOfCounts:
+        countOfCounts[counts[key]] = countOfCounts[counts[key]] + 1
+      else:
+        countOfCounts[counts[key]] = 1
+
+    #Compute the modified counts for each bigram
+    modCounts = {}
+    modProbs = {}
+    wordCounts = Counter(self.tokens)
+    for key in counts:
+      c = counts[key]
+      if  c<T:
+        
+        modCounts[key] = (c+1) * float(countOfCounts[c+1])/float(countOfCounts[c])
+        
+        #modCounts[key] = ((c + 1) *float(countOfCounts[c+1])/float(countOfCounts[c]) - c*(T+1) *countOfCounts[T+1]/countOfCounts[1])/(1-(T+1)*countOfCounts[T+1]/countOfCounts[1])
+
+      else:
+        modCounts[key] = counts[key]
+      self.modProbs[key] = modCounts[key]/float(wordCounts[key[0]])
+      self.modProbs[("","")] = float(countOfCounts[1])/(float(totalBigrams*((len(wordCounts)**2)-totalBigrams)))
+      #print(abs(self.modProbs[key]-self.bigram_dist[key[0]][key[1]]))
+      #print(self.bigram_dist[key[0]][key[1]])
+      #print("ModProb")
+      #print self.modProbs[key]
+
+
+
+
+
+def tokenizeText(text):
+  tokens = []
+  if text.find("Subject :")!=-1:
+      text = text[text.find("Subject :")+len("Subject :"):]
+
+  sentences = nltk.tokenize.sent_tokenize(text)
+  for sentence in sentences:
+    regex = re.compile('[.]')
+    parsedSentence = "BEGIN" +" " +regex.sub(" "+"END"+" ",sentence)
+    tokens = tokens + nltk.tokenize.word_tokenize(parsedSentence)
+  
+  return tokens
+
+
+
+#replace all words in a text that are not in a language model with unknown symbols
+def removeUnseenWords(text,corpusTokens):
+
+  for i in xrange(0,len(text)):
+    token = text[i]    
+
+    if token not in corpusTokens:
+      text[i] = "UNK"
+
+
+
+
+
+
+
+
+
+
+#Classify each test text by calculating the perplexity of each language model on it and selecting
+#the topic with the least perplexity
+def classify(languageModels):
+  predictions = {}
+  allPerplexities = {}
+  test_files = 'data_corrected/classificationTask/test_for_classification'
+  for i in xrange (0,len(os.listdir(test_files))):
+      filename = os.listdir(test_files)[i]
+      with open(test_files + '/'+filename, 'r') as article:
+          string = article.read()
+          tokens = tokenizeText(string)
+          
+          perplexities = []
+          for lModel in languageModels:
+            tokenCopy = list(tokens)
+            removeUnseenWords(tokenCopy,lModel.tokens)
+            perplexities.append(lModel.perplexity(2,tokenCopy))
+          max_perplexity = min(perplexities)
+          max_topic = perplexities.index(max_perplexity)
+          predictions[filename] = languageModels[max_topic].topic
+          allPerplexities[filename] = list(perplexities)
+          print perplexities
+          print("Predicted topic for " +filename +" is "+ predictions[filename])
+
+
+
+  topicDict = {}
+  
+  topicDict['atheism'] = 0
+  topicDict['autos'] =  1
+  topicDict['computer_graphics']= 2
+  topicDict['medicine'] = 3
+  topicDict['motorcycles'] =  4
+  topicDict['religion'] = 5
+  topicDict['space'] =  6
+  f = open('predictions.csv','w')
+  f.write("Id,Prediction" + '\n')
+  for file in predictions:
+    f.write(file+","+str(topicDict[predictions[filename]])+'\n')
+
+
+
+  print("Done with Predictions")
+
 
 
 
 
 def main():
-  dir_path = sys.argv[1]
-  #nltk.download()
-  model = LMmodel(dir_path)
-  model.parse_files()
-  model.tokenize()
-  model.unigram(model.tokens)
-  model.bigram(model.tokens)
-  print model.perplexity(2)
+  topics = ["atheism",     "graphics"   , "motorcycles"   ,"space",
+"autos",    "medicine",    "religion"]
+  setOfModels = []
+  for topic in topics:
+    i = topics.index(topic)
+    print("Training on "+topic)
+    dir_path = 'data_corrected/classificationTask/'+topic+'/train_docs'
+    setOfModels.append(LMmodel(dir_path))
+    setOfModels[i].parse_files()
+    setOfModels[i].tokenize()
+    setOfModels[i].replaceFirstSeen()
+    setOfModels[i].unigram(setOfModels[i].tokens)
+    #setOfModels[topic].bigram(setOfModels[topic].tokens)
+    setOfModels[i].goodTuring(0)
+    setOfModels[i].topic = topic
+
+  classify(setOfModels)
+
+
+
+
+
+
+
+  
+
 
 
 
