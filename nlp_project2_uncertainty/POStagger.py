@@ -158,21 +158,22 @@ class POStagger():
   def spanRanges(self,predictions):
     ranges = []
     inSpan = False
-    curRange = (0,0)
+    curRange = [0,0]
     counter = 0
     for i in xrange(0,len(predictions)):
       sentence = predictions[i]
       for j in xrange(0,len(sentence)):
         tup = sentence[j]
-        if inspan and tup[1] =! "I-CUE"
+        if inSpan and tup[1] != "I-CUE":
           curRange[1] = counter -1
           inSpan = False
-          ranges.append(curRange)
+          ranges.append((curRange[0],curRange[1]))
         if not inSpan and tup[1] =="B-CUE":
           inSpan = True
           curRange[0] = counter
         counter = counter+1
-    return ranges
+    formattedRanges = [str(tup[0])+'-'+str(tup[1]) for tup in ranges]
+    return " ".join(formattedRanges)
 
 
 
@@ -191,6 +192,9 @@ def main():
 
   baseline_public_predicted = tagger.predict_hedge_baseline(public)
 
+  rangesPublic = tagger.spanRanges(baseline_public_predicted)
+  rangesPrivate = tagger.spanRanges(baseline_private_predicted)
+
   s_public = tagger.sentence_post_processing("public", baseline_public_predicted)
 
   s_private = tagger.sentence_post_processing("private", baseline_private_predicted)
@@ -203,6 +207,8 @@ def main():
   baseline.close()
 
   #predicted = tagger.hmm_predict(public)
+  predicted
+  #tagger.spanRanges(predicted)
   #s = tagger.sentence_post_processing("public", predicted)
 
 
