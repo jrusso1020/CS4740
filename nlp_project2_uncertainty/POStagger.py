@@ -1,6 +1,7 @@
 import glob
 import sys
 import nltk
+import numpy as np
 
 class POStagger():
   def __init__(self):
@@ -62,12 +63,59 @@ class POStagger():
             tagged_test.append(curr_sent)
     return tagged_test
 
+  # using preknown hedgewords to predict uncertainty
+  def build_hedge_dict(self):
+    self.baseline_dictionary["about"] = "B-CUE"
+    self.baseline_dictionary["apparently"] = "B-CUE"
+    self.baseline_dictionary["appear"] = "B-CUE"
+    self.baseline_dictionary["around"] = "B-CUE"
+    self.baseline_dictionary["basically"] = "B-CUE"
+    self.baseline_dictionary["can"] = "B-CUE"
+    self.baseline_dictionary["could"] = "B-CUE"
+    self.baseline_dictionary["effectively"] = "B-CUE"
+    self.baseline_dictionary["evidently"] = "B-CUE"
+    self.baseline_dictionary["fairly"] = "B-CUE"
+    self.baseline_dictionary["generally"] = "B-CUE"
+    self.baseline_dictionary["hopefully"] = "B-CUE"
+    self.baseline_dictionary["largely"] = "B-CUE"
+    self.baseline_dictionary["likely"] = "B-CUE"
+    self.baseline_dictionary["mainly"] = "B-CUE"
+    self.baseline_dictionary["may"] = "B-CUE"
+    self.baseline_dictionary["maybe"] = "B-CUE"
+    self.baseline_dictionary["mostly"] = "B-CUE"
+    self.baseline_dictionary["overall"] = "B-CUE"
+    self.baseline_dictionary["perhaps"] = "B-CUE"
+    self.baseline_dictionary["presumably"] = "B-CUE"
+    self.baseline_dictionary["pretty"] = "B-CUE"
+    self.baseline_dictionary["probably"] = "B-CUE"
+    self.baseline_dictionary["clearly"] = "B-CUE"
+    self.baseline_dictionary["quite"] = "B-CUE"
+    self.baseline_dictionary["rather"] = "B-CUE"
+    self.baseline_dictionary["really"] = "B-CUE"
+    self.baseline_dictionary["seem"] = "B-CUE"
+    self.baseline_dictionary["somewhat"] = "B-CUE"
+    self.baseline_dictionary["supposedly"] = "B-CUE"
+
   # build a baseline uncertainty dictionary where all uncertain tokens are in it
   def build_baseline_dict(self):
     for sentence in self.train_lines:
       for tup in sentence:
         if ("CUE" in tup[1]) and (tup[0] not in self.baseline_dictionary):
           self.baseline_dictionary[tup[0]] = tup[1]
+
+  # predict using hedge word dictionary
+  def predict_hedge_baseline(self, test_list):
+    predicted = []
+    for line in test_list:
+      curr_sent = []
+      for token in line:
+        if token.split("\t")[0] in self.baseline_dictionary:
+          curr_sent.append((token, "B-CUE"))
+        else:
+          curr_sent.append((token, "O"))
+      predicted.append(curr_sent)
+
+    return predicted
 
   # predict uncertainty based on baseline dictionary occurrences
   def predict_baseline(self, test_list):
@@ -95,6 +143,16 @@ class POStagger():
 
     return predicted
 
+  # post processer on the sentence level for determing which sentences have uncertainty
+  def sentence_post_processing(self, test, predicted):
+    string = "SENTENCE-" + test + ","
+    for idx, sentence in enumerate(predicted):
+      for tup in sentence:
+        if tup[1]=="B-CUE" or tup[1]=="I-CUE":
+          string += str(idx) + " "
+          break
+
+    return string
 
 
 
@@ -103,15 +161,28 @@ def main():
   tagger.parse_training_files("train")
   tagger.hmm_train()
 
-  tagger.build_baseline_dict()
+  tagger.build_hedge_dict()
 
   public = tagger.parse_testing_files("test-public")
+  private = tagger.parse_testing_files("test-private")
 
-  baseline_public_predicted = tagger.predict_baseline(public)
+  baseline_private_predicted = tagger.predict_hedge_baseline(private)
 
-  sys.exit(0)
+  baseline_public_predicted = tagger.predict_hedge_baseline(public)
 
-  predicted = tagger.hmm_predict(public)
+  s_public = tagger.sentence_post_processing("public", baseline_public_predicted)
+
+  s_private = tagger.sentence_post_processing("private", baseline_private_predicted)
+
+  csv = "Type,Indices\n"
+  csv += s_public + "\n"
+  csv += s_private + "\n"
+  baseline = open("baseline_sentence.csv", 'w')
+  baseline.write(csv)
+  baseline.close()
+
+  #predicted = tagger.hmm_predict(public)
+  #s = tagger.sentence_post_processing("public", predicted)
 
 
 
