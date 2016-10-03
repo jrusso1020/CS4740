@@ -23,26 +23,25 @@ class POStagger():
             curr_sent = []
             for index, s in enumerate(split):
               tup = s.rsplit('\t', 1)
-              if len(tup) > 1:
-                if tup[1]=='_':
-                  curr_sent.append((tup[0], "O"))
-                  temp = "O"
-                elif 'CUE' in tup[1]:
-                  curr_sent.append((tup[0], "B-CUE"))
-                  temp = "B-CUE"
-              else:
-                if tup[1]=="_":
-                  curr_sent.append((tup[0], "O"))
-                  temp = "O"
-                elif temp=="O" and ('CUE' in tup[1]):
-                  curr_sent.append((tup[0], "B-CUE"))
-                  temp = "B-CUE"
-                elif temp=="B-CUE" and ('CUE' in tup[1]):
-                  curr_sent.append((tup[0], "I-CUE"))
-                  temp = "I-CUE"
-                elif temp=="I-CUE" and ('CUE' in tup[1]):
-                  curr_sent.append((tup[0], "I-CUE"))
-                  temp = "I-CUE"
+              if tup[1]=='_':
+                curr_sent.append((tup[0], "O"))
+                temp = "O"
+              elif temp=="" and ('CUE' in tup[1]):
+                print("2")
+                curr_sent.append((tup[0], "B-CUE"))
+                temp = "B-CUE"
+              elif temp=="O" and ('CUE' in tup[1]):
+                print("4")
+                curr_sent.append((tup[0], "B-CUE"))
+                temp = "B-CUE"
+              elif temp=="B-CUE" and ('CUE' in tup[1]):
+                print("5")
+                curr_sent.append((tup[0], "I-CUE"))
+                temp = "I-CUE"
+              elif temp=="I-CUE" and ('CUE' in tup[1]):
+                print("6")
+                curr_sent.append((tup[0], "I-CUE"))
+                temp = "I-CUE"
             self.train_lines.append(curr_sent)
 
 
