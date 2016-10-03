@@ -17,25 +17,25 @@ class POStagger():
         for index, s in enumerate(split):
           tup = s.rsplit('\t', 1)
           if len(tup)>1:
-            if len(self.tagged_lines)==0:
+            if len(self.train_lines)==0:
               if tup[1]=='_':
-                self.tagged_lines.append((tup[0], "O"))
+                self.train_lines.append((tup[0], "O"))
                 temp = "O"
               elif 'CUE' in tup[1]:
-                self.tagged_lines.append((tup[0], "B-CUE"))
+                self.train_lines.append((tup[0], "B-CUE"))
                 temp = "B-CUE"
             else:
               if tup[1]=="_":
-                self.tagged_lines.append((tup[0], "O"))
+                self.train_lines.append((tup[0], "O"))
                 temp = "O"
               elif temp=="O" and ('CUE' in tup[1]):
-                self.tagged_lines.append((tup[0], "B-CUE"))
+                self.train_lines.append((tup[0], "B-CUE"))
                 temp = "B-CUE"
               elif temp=="B-CUE" and ('CUE' in tup[1]):
-                self.tagged_lines.append((tup[0], "I-CUE"))
+                self.train_lines.append((tup[0], "I-CUE"))
                 temp = "I-CUE"
               elif temp=="I-CUE" and ('CUE' in tup[1]):
-                self.tagged_lines.append((tup[0], "I-CUE"))
+                self.train_lines.append((tup[0], "I-CUE"))
                 temp = "I-CUE"
 
   def parse_testing_files(self, directory):
@@ -59,7 +59,7 @@ class POStagger():
 
 def main():
   tagger = POStagger()
-  tagger.parse_files("train")
+  tagger.parse_training_files("train")
 
 
 if __name__ == '__main__':
