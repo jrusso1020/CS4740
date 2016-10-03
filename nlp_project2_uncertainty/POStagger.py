@@ -172,6 +172,7 @@ class POStagger():
           inSpan = True
           curRange[0] = counter
         counter = counter+1
+    return ranges
 
 
 
