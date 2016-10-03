@@ -14,35 +14,36 @@ class POStagger():
     for file_name in glob.glob(directory + "/*.txt"):
       with open(file_name, 'r') as article:
         text = article.read()
-        split = text.split("\n")
+        sents = text.split("\n\n")
         temp = ""
-        curr_sent = []
-        for index, s in enumerate(split):
-          tup = s.rsplit('\t', 1)
-          if len(tup)>1:
-            if len(curr_sent)==0:
-              if tup[1]=='_':
-                curr_sent.append((tup[0], "O"))
-                temp = "O"
-              elif 'CUE' in tup[1]:
-                curr_sent.append((tup[0], "B-CUE"))
-                temp = "B-CUE"
-            else:
-              if tup[1]=="_":
-                curr_sent.append((tup[0], "O"))
-                temp = "O"
-              elif temp=="O" and ('CUE' in tup[1]):
-                curr_sent.append((tup[0], "B-CUE"))
-                temp = "B-CUE"
-              elif temp=="B-CUE" and ('CUE' in tup[1]):
-                curr_sent.append((tup[0], "I-CUE"))
-                temp = "I-CUE"
-              elif temp=="I-CUE" and ('CUE' in tup[1]):
-                curr_sent.append((tup[0], "I-CUE"))
-                temp = "I-CUE"
-          if (".\t." in tup[0]) or ("!\t!" in tup[0]) or ("?\t?" in tup[0]):
-            self.train_lines.append(curr_sent)
+        for sent in sents:
+          if sent != "":
+            split = sent.split("\n")
             curr_sent = []
+            for index, s in enumerate(split):
+              tup = s.rsplit('\t', 1)
+              if len(tup) > 1:
+                if tup[1]=='_':
+                  curr_sent.append((tup[0], "O"))
+                  temp = "O"
+                elif 'CUE' in tup[1]:
+                  curr_sent.append((tup[0], "B-CUE"))
+                  temp = "B-CUE"
+              else:
+                if tup[1]=="_":
+                  curr_sent.append((tup[0], "O"))
+                  temp = "O"
+                elif temp=="O" and ('CUE' in tup[1]):
+                  curr_sent.append((tup[0], "B-CUE"))
+                  temp = "B-CUE"
+                elif temp=="B-CUE" and ('CUE' in tup[1]):
+                  curr_sent.append((tup[0], "I-CUE"))
+                  temp = "I-CUE"
+                elif temp=="I-CUE" and ('CUE' in tup[1]):
+                  curr_sent.append((tup[0], "I-CUE"))
+                  temp = "I-CUE"
+            self.train_lines.append(curr_sent)
+
 
   # parse the testing directory
   def parse_testing_files(self, directory):
@@ -50,15 +51,15 @@ class POStagger():
     for file_name in glob.glob(directory + "/*.txt"):
       with open(file_name, 'r') as article:
         text = article.read()
-        split = text.split("\n")
-        temp = ""
-        curr_sent = []
-        for index, s in enumerate(split):
-          if s!="":
-            curr_sent.append(s)
-          if (".\t." in s) or ("!\t!" in s) or ("?\t?" in s):
-            tagged_test.append(curr_sent)
+        sents = text.split("\n\n")
+        for sent in sents:
+          if sent != "":
+            split = sent.split("\n")
             curr_sent = []
+            for index, s in enumerate(split):
+              if s!= "":
+                curr_sent.append(s)
+            tagged_test.append(curr_sent)
     return tagged_test
 
   # build a baseline uncertainty dictionary where all uncertain tokens are in it
@@ -107,6 +108,8 @@ def main():
   public = tagger.parse_testing_files("test-public")
 
   baseline_public_predicted = tagger.predict_baseline(public)
+
+  sys.exit(0)
 
   predicted = tagger.hmm_predict(public)
 
