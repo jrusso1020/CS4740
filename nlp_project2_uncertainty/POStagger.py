@@ -154,6 +154,26 @@ class POStagger():
 
     return string
 
+  #calculate the span ranges in the predictions for kaggle
+  def spanRanges(self,predictions):
+    ranges = []
+    inSpan = False
+    curRange = (0,0)
+    counter = 0
+    for i in xrange(0,len(predictions)):
+      sentence = predictions[i]
+      for j in xrange(0,len(sentence)):
+        tup = sentence[j]
+        if inspan and tup[1] =! "I-CUE"
+          curRange[1] = counter -1
+          inSpan = False
+          ranges.append(curRange)
+        if not inSpan and tup[1] =="B-CUE":
+          inSpan = True
+          curRange[0] = counter
+        counter = counter+1
+
+
 
 
 def main():
