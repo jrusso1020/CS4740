@@ -27,19 +27,19 @@ class POStagger():
                 curr_sent.append((tup[0], "O"))
                 temp = "O"
               elif temp=="" and ('CUE' in tup[1]):
-                print("2")
+                
                 curr_sent.append((tup[0], "B-CUE"))
                 temp = "B-CUE"
               elif temp=="O" and ('CUE' in tup[1]):
-                print("4")
+                
                 curr_sent.append((tup[0], "B-CUE"))
                 temp = "B-CUE"
               elif temp=="B-CUE" and ('CUE' in tup[1]):
-                print("5")
+                
                 curr_sent.append((tup[0], "I-CUE"))
                 temp = "I-CUE"
               elif temp=="I-CUE" and ('CUE' in tup[1]):
-                print("6")
+                
                 curr_sent.append((tup[0], "I-CUE"))
                 temp = "I-CUE"
             self.train_lines.append(curr_sent)
@@ -206,8 +206,8 @@ def main():
   baseline.close()
 
   #predicted = tagger.hmm_predict(public)
-  predicted
-  #tagger.spanRanges(predicted)
+  
+  #hmmRanges = tagger.spanRanges(predicted)
   #s = tagger.sentence_post_processing("public", predicted)
 
 
