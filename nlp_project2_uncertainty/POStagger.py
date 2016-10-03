@@ -27,19 +27,19 @@ class POStagger():
                 curr_sent.append((tup[0], "O"))
                 temp = "O"
               elif temp=="" and ('CUE' in tup[1]):
-                
+
                 curr_sent.append((tup[0], "B-CUE"))
                 temp = "B-CUE"
               elif temp=="O" and ('CUE' in tup[1]):
-                
+
                 curr_sent.append((tup[0], "B-CUE"))
                 temp = "B-CUE"
               elif temp=="B-CUE" and ('CUE' in tup[1]):
-                
+
                 curr_sent.append((tup[0], "I-CUE"))
                 temp = "I-CUE"
               elif temp=="I-CUE" and ('CUE' in tup[1]):
-                
+
                 curr_sent.append((tup[0], "I-CUE"))
                 temp = "I-CUE"
             self.train_lines.append(curr_sent)
@@ -159,9 +159,9 @@ class POStagger():
     inSpan = False
     curRange = [0,0]
     counter = 0
-    for i in xrange(0,len(predictions)):
+    for i in range(len(predictions)):
       sentence = predictions[i]
-      for j in xrange(0,len(sentence)):
+      for j in range(len(sentence)):
         tup = sentence[j]
         if inSpan and tup[1] != "I-CUE":
           curRange[1] = counter -1
@@ -205,8 +205,15 @@ def main():
   baseline.write(csv)
   baseline.close()
 
+  csv = "Type,Spans\n"
+  csv += "CUE-public," + rangesPublic
+  csv += "CUE-private," + rangesPrivate
+  baseline = open("baseline_span.csv", 'w')
+  baseline.write(csv)
+  baseline.close()
+
   #predicted = tagger.hmm_predict(public)
-  
+
   #hmmRanges = tagger.spanRanges(predicted)
   #s = tagger.sentence_post_processing("public", predicted)
 
