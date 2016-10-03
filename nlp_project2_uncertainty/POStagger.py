@@ -68,6 +68,7 @@ class POStagger():
         if ("CUE" in tup[1]) and (tup[0] not in self.baseline_dictionary):
           self.baseline_dictionary[tup[0]] = tup[1]
 
+  # predict uncertainty based on baseline dictionary occurrences
   def predict_baseline(self, test_list):
     predicted = []
     for line in test_list:
