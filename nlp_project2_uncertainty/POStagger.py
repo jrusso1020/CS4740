@@ -8,6 +8,8 @@ class POStagger():
     self.train_lines = []
     self.hmmtrainer = nltk.tag.HiddenMarkovModelTrainer()
     self.hmmtagger = None
+    self.crftagger = nltk.tag.CRFTagger()
+    self.perceptrontagger = nltk.tag.perceptron.PerceptronTagger(load=False)
     self.baseline_dictionary = {}
 
   # parse the training directory putting BIO CUE's for all CUES
@@ -139,6 +141,26 @@ class POStagger():
     predicted = []
     for line in test_list:
       predicted.append(self.hmmtagger.tag(line))
+
+    return predicted
+
+  # wrapper function to train the CRF tagger provided by nltk
+  def crf_train(self):
+    self.crftagger.train(self.train_lines, 'model.crf.tagger')
+
+  # wrapper function to tag using the CRF tagger provided by nltk
+  def crf_predict(self, test_list):
+    return self.crftagger.tag_sents(test_list)
+
+  # wrapper function to train the perceptron tagger provided by nltk
+  def perceptron_train(self):
+    self.perceptrontagger.train(self.train_lines)
+
+  # wrapper function to tag using the perceptron tagger provided by nltk
+  def perceptron_predict(self, test_list):
+    predicted = []
+    for line in test_list:
+      predicted.append(self.perceptrontagger.tag(line))
 
     return predicted
 
