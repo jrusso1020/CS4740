@@ -222,13 +222,13 @@ def main():
 
   csv = "Type,Indices\n"
   csv += s_public + "\n"
-  csv += s_private + "\n"
+  csv += s_private
   baseline = open("baseline_sentence.csv", 'w')
   baseline.write(csv)
   baseline.close()
 
   csv = "Type,Spans\n"
-  csv += "CUE-public," + rangesPublic
+  csv += "CUE-public," + rangesPublic + "\n"
   csv += "CUE-private," + rangesPrivate
   baseline = open("baseline_span.csv", 'w')
   baseline.write(csv)
