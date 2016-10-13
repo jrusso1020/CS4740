@@ -11,6 +11,9 @@ class POStagger():
     self.crftagger = nltk.tag.CRFTagger()
     self.perceptrontagger = nltk.tag.perceptron.PerceptronTagger(load=False)
     self.baseline_dictionary = {}
+    self.val_train_lines = []
+    self.val_test_lines_answers = []
+    self.val_test_lines = []
 
   # parse the training directory putting BIO CUE's for all CUES
   def parse_training_files(self, directory):
@@ -196,22 +199,65 @@ class POStagger():
     formattedRanges = [str(tup[0])+'-'+str(tup[1]) for tup in ranges]
     return " ".join(formattedRanges)
 
+  # split the training data into 75% training and 25% testing
+  def split_training(self):
+    self.val_train_lines = self.train_lines[:int(len(self.train_lines) * 0.75)]
+
+    self.val_test_lines_answers = self.train_lines[int(len(self.train_lines) * 0.75):]
+
+    for list_tups in self.val_test_lines_answers:
+      first_items = [str(i[0]) for i in list_tups]
+      self.val_test_lines.append(first_items)
+
+  # calculate the precision of approach using our val_test_lines prediction vs the actual
+  def precision(self, sent, actual, predicted):
+    if sent:
+      actual_sent = actual.split(" ")
+      del actual_sent[-1]
+      pred_sent = predicted.split(" ")
+      del pred_sent[-1]
+      num_correct = len(set(actual_sent) & set(pred_sent))
+      pred_pos = len(pred_sent)
+
+      return num_correct / pred_pos
+    else:
+      pass
+
+  # calculate the recall of approach using our val_test_lines prediction vs the actual
+  def recall(self, sent, actual, predicted):
+    if sent:
+      actual_sent = actual.split(" ")
+      del actual_sent[-1]
+      pred_sent = predicted.split(" ")
+      del pred_sent[-1]
+      num_correct = len(set(actual_sent) & set(pred_sent))
+      act_pos = len(actual_sent)
+
+      return num_correct / act_pos
+    else:
+      pass
+
+  # calculate the f measure of our approach from the precision and recall
+  def f_measure(self, prec, recall):
+    return 2 * ((prec * recall)/ (prec + recall))
+
 
 
 
 def main():
   tagger = POStagger()
   tagger.parse_training_files("train")
+  tagger.split_training()
   tagger.hmm_train()
 
-  tagger.build_hedge_dict()
+  # tagger.build_hedge_dict()
 
   public = tagger.parse_testing_files("test-public")
   private = tagger.parse_testing_files("test-private")
 
-  baseline_private_predicted = tagger.predict_hedge_baseline(private)
+  # baseline_private_predicted = tagger.predict_hedge_baseline(private)
 
-  baseline_public_predicted = tagger.predict_hedge_baseline(public)
+  # baseline_public_predicted = tagger.predict_hedge_baseline(public)
 
   rangesPublic = tagger.spanRanges(baseline_public_predicted)
   rangesPrivate = tagger.spanRanges(baseline_private_predicted)
