@@ -209,33 +209,52 @@ class POStagger():
       first_items = [str(i[0]) for i in list_tups]
       self.val_test_lines.append(first_items)
 
+  # helper to break up our string of spans into a list of numbers
+  def break_up_spans(self, string_spans):
+    s_split = string_spans.split(" ")
+
+    span_list = []
+    for x in s_split:
+      temp = x.split("-")
+      span_list = span_list + list(range(temp[0], temp[1] + 1))
+
+    return span_list
+
   # calculate the precision of approach using our val_test_lines prediction vs the actual
   def precision(self, sent, actual, predicted):
+    act = []
+    pred = []
     if sent:
-      actual_sent = actual.split(" ")
-      del actual_sent[-1]
-      pred_sent = predicted.split(" ")
-      del pred_sent[-1]
-      num_correct = len(set(actual_sent) & set(pred_sent))
-      pred_pos = len(pred_sent)
-
-      return num_correct / pred_pos
+      act = actual.split(" ")
+      del act[-1]
+      pred = predicted.split(" ")
+      del pred[-1]
     else:
-      pass
+      act = self.break_up_spans(actual)
+      pred = self.break_up_spans(predicted)
+
+    num_correct = len(set(actual_sent) & set(pred_sent))
+    pred_pos = len(pred_sent)
+
+    return num_correct / pred_pos
 
   # calculate the recall of approach using our val_test_lines prediction vs the actual
   def recall(self, sent, actual, predicted):
+    act = []
+    pred = []
     if sent:
-      actual_sent = actual.split(" ")
-      del actual_sent[-1]
-      pred_sent = predicted.split(" ")
-      del pred_sent[-1]
-      num_correct = len(set(actual_sent) & set(pred_sent))
-      act_pos = len(actual_sent)
-
-      return num_correct / act_pos
+      act = actual.split(" ")
+      del act[-1]
+      pred = predicted.split(" ")
+      del pred[-1]
     else:
-      pass
+      act = self.break_up_spans(actual)
+      pred = self.break_up_spans(predicted)
+
+    num_correct = len(set(actual_sent) & set(pred_sent))
+    act_pos = len(actual_sent)
+
+    return num_correct / act_pos
 
   # calculate the f measure of our approach from the precision and recall
   def f_measure(self, prec, recall):
