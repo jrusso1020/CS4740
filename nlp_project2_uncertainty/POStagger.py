@@ -269,6 +269,7 @@ def main():
   tagger.split_training()
   tagger.hmm_train()
   tagger.crf_train()
+  tagger.perceptron_train()
 
   # tagger.build_hedge_dict()
 
