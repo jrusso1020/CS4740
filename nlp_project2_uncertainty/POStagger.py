@@ -167,6 +167,14 @@ class POStagger():
 
     return predicted
 
+  def get_features_simple(tokens,idx):
+    features = []
+    features.append(token.split()[0])
+    features.append(token.split()[1])
+
+    return features 
+
+
   # post processer on the sentence level for determing which sentences have uncertainty
   def sentence_post_processing(self, test, predicted):
     string = "SENTENCE-" + test + ","
