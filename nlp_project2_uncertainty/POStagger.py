@@ -268,6 +268,7 @@ def main():
   tagger.parse_training_files("train")
   tagger.split_training()
   tagger.hmm_train()
+  tagger.crf_train()
 
   # tagger.build_hedge_dict()
 
@@ -278,31 +279,88 @@ def main():
 
   # baseline_public_predicted = tagger.predict_hedge_baseline(public)
 
-  rangesPublic = tagger.spanRanges(baseline_public_predicted)
-  rangesPrivate = tagger.spanRanges(baseline_private_predicted)
+  # rangesPublic = tagger.spanRanges(baseline_public_predicted)
+  # rangesPrivate = tagger.spanRanges(baseline_private_predicted)
 
-  s_public = tagger.sentence_post_processing("public", baseline_public_predicted)
+  # s_public = tagger.sentence_post_processing("public", baseline_public_predicted)
 
-  s_private = tagger.sentence_post_processing("private", baseline_private_predicted)
+  # s_private = tagger.sentence_post_processing("private", baseline_private_predicted)
+
+  hmm_public = tagger.hmm_predict(public)
+  hmm_private = tagger.hmm_predict(private)
+
+  hmm_pub_ranges = tagger.spanRanges(hmm_public)
+  hmm_pub_sentences = tagger.sentence_post_processing("public", hmm_public)
+
+  hmm_priv_ranges = tagger.spanRanges(hmm_private)
+  hmm_priv_sentences = tagger.sentence_post_processing("public", hmm_private)
+
 
   csv = "Type,Indices\n"
-  csv += s_public + "\n"
-  csv += s_private
-  baseline = open("baseline_sentence.csv", 'w')
+  csv += hmm_pub_sentences + "\n"
+  csv += hmm_priv_sentences
+  baseline = open("hmm_sentence.csv", 'w')
   baseline.write(csv)
   baseline.close()
 
   csv = "Type,Spans\n"
-  csv += "CUE-public," + rangesPublic + "\n"
-  csv += "CUE-private," + rangesPrivate
-  baseline = open("baseline_span.csv", 'w')
+  csv += "CUE-public," + hmm_pub_ranges + "\n"
+  csv += "CUE-private," + hmm_priv_ranges
+  baseline = open("hmm_span.csv", 'w')
   baseline.write(csv)
   baseline.close()
 
-  #predicted = tagger.hmm_predict(public)
+  crf_public = tagger.crf_predict(public)
+  crf_private = tagger.crf_predict(private)
 
-  #hmmRanges = tagger.spanRanges(predicted)
-  #s = tagger.sentence_post_processing("public", predicted)
+  crf_pub_ranges = tagger.spanRanges(crf_public)
+  crf_pub_sentences = tagger.sentence_post_processing("public", crf_public)
+
+  crf_priv_ranges = tagger.spanRanges(crf_private)
+  crf_priv_sentences = tagger.sentence_post_processing("public", crf_private)
+
+
+  csv = "Type,Indices\n"
+  csv += crf_pub_sentences + "\n"
+  csv += crf_priv_sentences
+  baseline = open("crf_sentence.csv", 'w')
+  baseline.write(csv)
+  baseline.close()
+
+  csv = "Type,Spans\n"
+  csv += "CUE-public," + crf_pub_ranges + "\n"
+  csv += "CUE-private," + crf_priv_ranges
+  baseline = open("crf_span.csv", 'w')
+  baseline.write(csv)
+  baseline.close()
+
+  perc_public = tagger.perceptron_predict(public)
+  perc_private = tagger.perceptron_predict(private)
+
+  perc_pub_ranges = tagger.spanRanges(perc_public)
+  perc_pub_sentences = tagger.sentence_post_processing("public", perc_public)
+
+  perc_priv_ranges = tagger.spanRanges(perc_private)
+  perc_priv_sentences = tagger.sentence_post_processing("public", perc_private)
+
+
+  csv = "Type,Indices\n"
+  csv += perc_pub_sentences + "\n"
+  csv += perc_priv_sentences
+  baseline = open("perc_sentence.csv", 'w')
+  baseline.write(csv)
+  baseline.close()
+
+  csv = "Type,Spans\n"
+  csv += "CUE-public," + perc_pub_ranges + "\n"
+  csv += "CUE-private," + perc_priv_ranges
+  baseline = open("perc_span.csv", 'w')
+  baseline.write(csv)
+  baseline.close()
+
+
+
+
 
 
 
