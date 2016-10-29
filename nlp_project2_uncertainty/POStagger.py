@@ -8,7 +8,7 @@ class POStagger():
     self.train_lines = []
     self.hmmtrainer = nltk.tag.HiddenMarkovModelTrainer()
     self.hmmtagger = None
-    self.crftagger = nltk.tag.CRFTagger(feature_func = self.get_features_simple)
+    self.crftagger = nltk.tag.CRFTagger(feature_func = self.get_features)
     self.perceptrontagger = nltk.tag.perceptron.PerceptronTagger(load=False)
     self.baseline_dictionary = {}
     self.val_train_lines = []
@@ -104,8 +104,8 @@ class POStagger():
   def build_baseline_dict(self):
     for sentence in self.train_lines:
       for tup in sentence:
-        if ("CUE" in tup[1]) and (tup[0] not in self.baseline_dictionary):
-          self.baseline_dictionary[tup[0]] = tup[1]
+        if ("CUE" in tup[1]) and (tup[0].split("\t")[0] not in self.baseline_dictionary):
+          self.baseline_dictionary[tup[0].split("\t")[0]] = "B-CUE"
 
   # predict using hedge word dictionary
   def predict_hedge_baseline(self, test_list):
@@ -156,7 +156,7 @@ class POStagger():
     return self.crftagger.tag_sents(test_list)
 
   # wrapper function to train the perceptron tagger provided by nltk
-  def perceptron_train(self):
+  def perceptron_train(self,nr_iter = 1000):
     self.perceptrontagger.train(self.val_train_lines)
 
   # wrapper function to tag using the perceptron tagger provided by nltk
@@ -173,6 +173,15 @@ class POStagger():
     features.append(tokens[idx].split()[1])
     return features
 
+  def get_word_features(self,tokens,idx):
+    features = []
+    rangeLength = 2
+    features.append(tokens[idx].split()[0])
+    for i in range(idx-rangeLength,idx+rangeLength):
+      features.append(tokens[i%len(tokens)].split()[1])
+      
+    return features 
+
   def get_features_1(self,tokens,idx):
     features = []
     features.append(tokens[idx].split()[0])
@@ -184,6 +193,17 @@ class POStagger():
       features.append(tokens[idx+1].split()[0])
       features.append(tokens[idx+1].split()[1])
     return features
+
+  def get_features(self,tokens,idx):
+    rangeLength = 2
+    features = []
+    
+    for i in range(idx-rangeLength,idx+rangeLength):
+      features.append(tokens[i%len(tokens)].split()[0])
+      features.append(tokens[i%len(tokens)].split()[1])
+
+
+    return features 
 
   # post processer on the sentence level for determing which sentences have uncertainty
   def sentence_post_processing(self, test, predicted):
@@ -236,7 +256,8 @@ class POStagger():
     span_list = []
     for x in s_split:
       temp = x.split("-")
-      span_list = span_list + list(range(int(temp[0]), int(temp[1]) + 1))
+      if len(temp)>1:
+        span_list = span_list + list(range(int(temp[0]), int(temp[1]) + 1))
 
     return span_list
 
@@ -252,6 +273,7 @@ class POStagger():
     else:
       act = self.break_up_spans(actual)
       pred = self.break_up_spans(predicted)
+
 
     num_correct = len(set(act) & set(pred))
     pred_pos = len(pred)
@@ -282,16 +304,46 @@ class POStagger():
 
 
 
+#baseline dictionary tagger results
+def dictExperiment(tagger,test_answers_sent,test_answers_span):
+  dict_test = tagger.predict_hedge_baseline(tagger.val_test_lines)
+  #print(dict_test)
+  dict_test_ranges = tagger.spanRanges(dict_test)
+  dict_test_sent = tagger.sentence_post_processing("",dict_test)
+  dict_range_p = tagger.precision(False, test_answers_span, dict_test_ranges)
+  dict_range_r = tagger.recall(False, test_answers_span, dict_test_ranges)
+  dict_range_f = tagger.f_measure(dict_range_p, dict_range_r)
 
-def main():
+  print("Dictionary Span Range")
+  print("Precision: " + str(dict_range_p))
+  print("Recall: " + str(dict_range_r))
+  print("F-Measure: " + str(dict_range_f))
+
+
+  dict_sent_p = tagger.precision(True, test_answers_sent, dict_test_sent)
+  dict_sent_r = tagger.recall(True, test_answers_sent, dict_test_sent)
+  dict_sent_f = tagger.f_measure(dict_sent_p, dict_sent_r)
+
+  print("Dict Sentences")
+  print("Precision: " + str(dict_sent_p))
+  print("Recall: " + str(dict_sent_r))
+  print("F-Measure: " + str(dict_sent_f))
+
+
+
+# split training data and test out different taggers for validation
+def experiments():
   tagger = POStagger()
   tagger.parse_training_files("train")
   tagger.split_training()
+  tagger.build_baseline_dict()
   tagger.hmm_train()
   tagger.crf_train()
   tagger.perceptron_train()
+  
 
-  # self testing results
+  self testing results
+ 
 
   hmm_test = tagger.hmm_predict(tagger.val_test_lines)
 
@@ -299,17 +351,25 @@ def main():
 
   perc_test = tagger.perceptron_predict(tagger.val_test_lines)
 
+ 
+
   hmm_test_ranges = tagger.spanRanges(hmm_test)
   hmm_test_sent = tagger.sentence_post_processing("", hmm_test)
 
   crf_test_ranges = tagger.spanRanges(crf_test)
   crf_test_sent = tagger.sentence_post_processing("", crf_test)
 
+
   perc_test_ranges = tagger.spanRanges(perc_test)
   perc_test_sent = tagger.sentence_post_processing("", perc_test)
 
   test_answers_span = tagger.spanRanges(tagger.val_test_lines_answers)
   test_answers_sent = tagger.sentence_post_processing("", tagger.val_test_lines_answers)
+
+ 
+  dictExperiment(tagger,test_answers_sent,test_answers_span)
+
+
 
   hmm_range_p = tagger.precision(False, test_answers_span, hmm_test_ranges)
   hmm_range_r = tagger.recall(False, test_answers_span, hmm_test_ranges)
@@ -358,15 +418,22 @@ def main():
 
   perc_sent_p = tagger.precision(True, test_answers_sent, perc_test_sent)
   perc_sent_r = tagger.recall(True, test_answers_sent, perc_test_sent)
-  perc_sent_f = tagger.f_measure(crf_sent_p, perc_sent_r)
+  perc_sent_f = tagger.f_measure(perc_sent_p, perc_sent_r)
 
   print("Average Perceptron Sentences")
   print("Precision: " + str(perc_sent_p))
   print("Recall: " + str(perc_sent_r))
   print("F-Measure: " + str(perc_sent_f))
 
+def main():
+  experiments()
+  # tagger = POStagger()
+  # tagger.parse_training_files("train")
+  # tagger.crf_train()
 
-  # tagger.build_hedge_dict()
+
+
+  # # tagger.build_hedge_dict()
 
   # public = tagger.parse_testing_files("test-public")
   # private = tagger.parse_testing_files("test-private")
@@ -419,14 +486,14 @@ def main():
   # csv = "Type,Indices\n"
   # csv += crf_pub_sentences + "\n"
   # csv += crf_priv_sentences
-  # baseline = open("crf_sentence.csv", 'w')
+  # baseline = open("crf_sentenceBest.csv", 'w')
   # baseline.write(csv)
   # baseline.close()
 
   # csv = "Type,Spans\n"
   # csv += "CUE-public," + crf_pub_ranges + "\n"
   # csv += "CUE-private," + crf_priv_ranges
-  # baseline = open("crf_span.csv", 'w')
+  # baseline = open("crf_spanBest.csv", 'w')
   # baseline.write(csv)
   # baseline.close()
 
