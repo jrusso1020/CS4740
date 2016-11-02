@@ -67,11 +67,24 @@ class QASystem():
 			split = sent.split()
 			top_ten_words.append(split[:10])
 
+		if len(top_ten_words)<5:
+			top_ten_words = top_ten_words + (["nil"] * (5-len(top_ten_words)))
+			indexes = indexes + ([1] * (5-len(top_ten_words)))
+
 		return top_ten_words, indexes
 
-	# need method to convert list of sentence indexes to document ID's for a question
-	def indexes_to_doc_id(self, indexes):
-		pass
+		# method to create answer.txt and save it
+		# param: question_ids = one list of all question ids
+		# param: doc_ids = list of lists of document ids for each question, index corresponds to same index of the question id in its list
+		# param: answers = list of lists of answers similiar to doc_ids list
+		# could possibly change doc_ids and answers to dictionaries, would just need to change code slightly
+		def create_answers(self, question_ids, doc_ids, answers):
+			string = ""
+			for idx, q in enumerate(question_ids):
+				for x in range(0, 5):
+					string += '{0} {1} {2}\n'.format(str(q), str(doc_ids[idx][x]), str(answers[idx][x]))
+			with open("answer.txt", "w") as text_file:
+				text_file.write(string)
 
 
 
