@@ -3,6 +3,7 @@ import nltk
 import re
 import os
 from sklearn.feature_extraction.text import TfidfVectorizer
+from nltk.tokenize import sent_tokenize
 
 
 class QASystem():
@@ -45,6 +46,26 @@ class QASystem():
 				text_begin = i
 			if '</TEXT>' in line:
 				text_end = i
+
+
+	# method that takes in list of documents, sentence tokenizes and concatenates the sentences to one list
+	# also returns the number of sentences in each document
+	def doc_sent_tokenizer(self, corpus):
+		all_sentences = []
+		doc_sentence_lengths = []
+		for doc in corpus:
+			doc_toke = sent_tokenize(doc)
+			all_sentences = all_sentences + doc_toke
+			doc_lengths.append(len(doc_toke))
+
+		return all_sentences, doc_sentence_lengths
+
+	# method that takes sent_indexes and length of document list by sentence and returns index
+	# need to take indexes from passage retrieval and put in here
+	def sent_index_to_doc_index(self, sent_idexes, len_documents_list):
+		pass
+
+
 
 
 	# method to compute cosine similiarity of the vector space between the query and documents
