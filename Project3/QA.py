@@ -2,6 +2,7 @@ import numpy as np
 import nltk
 import re
 import os
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 class QASystem():
@@ -22,15 +23,15 @@ class QASystem():
 			if 'Description' in list_questions[i]:
 				question = list_questions[i+1]
 				self.questions.append((questionIDX,question))
-			i = i+1							
-		
-	# Parse retrieved documents and extract text 
+			i = i+1
+
+	# Parse retrieved documents and extract text
 	def parse_documents(self):
 		for question in self.questions:
 			document_location = "/documents/" + str(question[0])
 			for doc in os.listdir(os.getcwd()+document_location):
-				doc_text = open(os.getcwd()+document_location+'/'+doc)			
-									
+				doc_text = open(os.getcwd()+document_location+'/'+doc)
+
 
 
 	# helper method for extracting text segment
@@ -44,7 +45,24 @@ class QASystem():
 			if '</TEXT>' in line:
 				text_end = i
 
-		 
+
+	# method to compute cosine similiarity of the vector space between the query and documents
+	# assuming query is the first item in the list of documents
+	def passage_retrieval(self, query, corpus, n_items):
+		corpus.insert(0, query)
+		vect = TfidfVectorizer(min_df=1)
+		tfidf = vect.fit_transform(corpus)
+
+		similiarity_matrix = (tfidf * tfidf.T).A
+
+		#get just the documents not including query
+		query_doc_similiarities = similiarity_matrix[0, 1:]
+
+
+		indexes = query_doc_similiarities.argsort()[-n_items:][::-1]
+		return corpus[indexes + 1]
+
+
 
 
 
@@ -52,7 +70,7 @@ def main():
 	qa_system = QASystem()
 	qa_system.parse_questions('question.txt')
 	qa_system.parse_documents()
-	
+
 
 if __name__ == '__main__':
 	main()
