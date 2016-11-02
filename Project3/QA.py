@@ -4,17 +4,16 @@ import re
 import os
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.tokenize import sent_tokenize
-import sys  
+import sys
 import codecs
 
-reload(sys)  
+reload(sys)
 sys.setdefaultencoding('utf8')
 
 
 class QASystem():
 	def __init__(self):
 		self.questions = []
-		self.documents = {}
 		self.corpus = {}
 
 
@@ -43,12 +42,12 @@ class QASystem():
 				doc_text = open(os.getcwd()+document_location+'/'+doc)
 				text = [line.replace('\r\n','')  for line in doc_text if not ('<P>' in line or '</P>' in line)]
 				extracted_text = self.extract_text(text)
-				text = ' '.join(extracted_text)	
-				documents[int(doc)-1] = ''.join([i if ord(i) < 128 else ' ' for i in text])			
+				text = ' '.join(extracted_text)
+				documents[int(doc)-1] = ''.join([i if ord(i) < 128 else ' ' for i in text])
 			self.corpus[question[0]] = documents
-		
+
 		print("Done parsing documents")
-		
+
 
 
 	# helper method for extracting text segment
@@ -76,33 +75,22 @@ class QASystem():
 
 		return all_sentences, doc_sentence_lengths
 
-	# method that takes sent_indexes and length of document list by sentence and returns index
-	# need to take indexes from passage retrieval and put in here
-	def sent_index_to_doc_index(self, sent_idexes, len_documents_list):
-		pass
-
-
 
 	# method that converts sentence array indices into document indicies
 	def compute_document_id(self,sentence_idxs,document_lengths):
-		doc_rel_indices = []
-		prev = 0
-		sentence_pos = []
-		for text_length in document_lengths:
-			doc_rel_indices.append(prev+text_length)
-			prev = doc_rel_indices[-1]
-		for idx in sentence_idxs:
-			if idx <= doc_rel_indices[0]:
-				sentence_pos.append(0)
-			elif doc_rel_indices[-2]<=idx:
-				sentence_pos.append(len(doc_rel_indices))
-
-			else:
-				pos = 0
-				while(idx<=doc_rel_indices[pos]):
-					pos = pos+1
-				sentence_pos.append(pos-1)
-		return sentence_pos
+		sentence_idxs = list(sentence_idxs)
+		doc_ids = [0] * 5
+		sorted_sentence_idxes = sorted(sentence_idxs)
+		sum_lengths = 0
+		index = 0
+		for idx, doc in enumerate(document_lengths):
+			if sum_lengths < sorted_sentence_idxes[index] and sum_lengths+doc>=sorted_sentence_idxes[index]:
+				doc_ids[sentence_idxs.index(sorted_sentence_idxes[index])] = idx
+				index +=1
+				if index >= len(sorted_sentence_idxes):
+					break
+			sum_lengths += doc
+		return doc_ids
 
 	# method that computes the best answers using only passage retrival for each question
 	def compute_answers(self):
@@ -113,7 +101,7 @@ class QASystem():
 			print("Answering Question: " + str(question[0]))
 			question_ids.append(question[0])
 			all_sentences,doc_sentence_lengths = self.doc_sent_tokenizer(self.corpus[question[0]])
-			top_ten_words,indexes  = self.passage_retrieval(question[1],all_sentences,10)
+			top_ten_words,indexes  = self.passage_retrieval(question[1],all_sentences, 5)
 
 			doc_ids[question[0]] = self.compute_document_id(indexes,doc_sentence_lengths)
 			answers_ids[question[0]] = top_ten_words
@@ -139,7 +127,7 @@ class QASystem():
 		top_ten_words = []
 		for sent in top_n:
 			split = sent.split()
-			top_ten_words.append(split[:10])
+			top_ten_words.append(' '.join(split[:10]))
 
 		if len(top_ten_words)<5:
 			top_ten_words = top_ten_words + (["nil"] * (5-len(top_ten_words)))
