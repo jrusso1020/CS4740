@@ -31,6 +31,7 @@ class QASystem():
 			document_location = "/documents/" + str(question[0])
 			for doc in os.listdir(os.getcwd()+document_location):
 				doc_text = open(os.getcwd()+document_location+'/'+doc)
+				extracted_text = self.extract_text(doc_text)
 
 
 
