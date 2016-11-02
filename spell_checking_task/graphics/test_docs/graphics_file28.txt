@@ -1,0 +1,1 @@
+BEGIN TIFF 6 END 0 I recently read in an book that the the TIFF version 6 END 0 specification was due too be released in the spring of 1992 END BEGIN I am interested in finding out about the new features of the TIFF spec ( a if it is out ) END BEGIN Specifically , I need too know if TIFF 6 END 0 supports VQ decompression a / or image tiling END

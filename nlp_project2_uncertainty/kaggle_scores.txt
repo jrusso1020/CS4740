@@ -1,0 +1,12 @@
+Public SPANS
+Baseline-0.09912
+HMM-0.18011
+CRF-0.21489
+Perceptron-0.29573
+
+Public Sentences
+Baseline- 0.30067
+HMM- 0.41447
+CRF- 0.35101
+Perceptron- 0.59464
+

@@ -1,0 +1,1 @@
+BEGIN POLYGON FILL routine needed END END END Hi , I am looking for an polygon fill routine too fill simple 4 sided polygons END BEGIN Can some one who has this routine in C help me in saving my `` REINVENTING `` time END BEGIN Thanx in advance END END END Rao END

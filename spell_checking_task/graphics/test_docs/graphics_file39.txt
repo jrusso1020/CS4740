@@ -1,0 +1,1 @@
+BEGIN Loosing color END BEGIN Hi guys END BEGIN I am scanning in an color image and it looks fine on the screen END BEGIN When I converted it into PCX , BMP , GIF files so as two get it into MS Windows the the colors got much lighter END BEGIN For example the yellows became white END BEGIN Any ideas ? BEGIN thanks Dan csc3phx @ vaxc END hofstra END edu
