@@ -60,7 +60,18 @@ class QASystem():
 
 
 		indexes = query_doc_similiarities.argsort()[-n_items:][::-1]
-		return corpus[indexes + 1]
+		top_n = corpus[indexes + 1]
+		top_ten_words = []
+		for sent in top_n:
+			split = sent.split()
+			top_ten_words.append(split[:10])
+
+		return top_ten_words, indexes
+
+	# need method to convert list of sentence indexes to document ID's for a question
+	def indexes_to_doc_id(self, indexes):
+		pass
+
 
 
 
