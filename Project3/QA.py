@@ -73,18 +73,18 @@ class QASystem():
 
 		return top_ten_words, indexes
 
-		# method to create answer.txt and save it
-		# param: question_ids = one list of all question ids
-		# param: doc_ids = list of lists of document ids for each question, index corresponds to same index of the question id in its list
-		# param: answers = list of lists of answers similiar to doc_ids list
-		# could possibly change doc_ids and answers to dictionaries, would just need to change code slightly
-		def create_answers(self, question_ids, doc_ids, answers):
-			string = ""
-			for idx, q in enumerate(question_ids):
-				for x in range(0, 5):
-					string += '{0} {1} {2}\n'.format(str(q), str(doc_ids[idx][x]), str(answers[idx][x]))
-			with open("answer.txt", "w") as text_file:
-				text_file.write(string)
+	# method to create answer.txt and save it
+	# param: question_ids = one list of all question ids
+	# param: doc_ids = list of lists of document ids for each question, index corresponds to same index of the question id in its list
+	# param: answers = list of lists of answers similiar to doc_ids list
+	# could possibly change doc_ids and answers to dictionaries, would just need to change code slightly
+	def create_answers(self, question_ids, doc_ids, answers):
+		string = ""
+		for idx, q in enumerate(question_ids):
+			for x in range(0, 5):
+				string += '{0} {1} {2}\n'.format(str(q), str(doc_ids[idx][x]), str(answers[idx][x]))
+		with open("answer.txt", "w") as text_file:
+			text_file.write(string)
 
 
 
