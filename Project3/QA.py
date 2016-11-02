@@ -4,6 +4,11 @@ import re
 import os
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.tokenize import sent_tokenize
+import sys  
+import codecs
+
+reload(sys)  
+sys.setdefaultencoding('utf8')
 
 
 class QASystem():
@@ -11,6 +16,7 @@ class QASystem():
 		self.questions = []
 		self.documents = {}
 		self.corpus = {}
+
 
 	# Parse questions to be answered, store questions in self.questions as
 	# a tuple of (question_idx,question)
@@ -37,8 +43,8 @@ class QASystem():
 				doc_text = open(os.getcwd()+document_location+'/'+doc)
 				text = [line.replace('\r\n','')  for line in doc_text if not ('<P>' in line or '</P>' in line)]
 				extracted_text = self.extract_text(text)
-				documents[int(doc)-1] = ' '.join(extracted_text)
-				
+				text = ' '.join(extracted_text)	
+				documents[int(doc)-1] = ''.join([i if ord(i) < 128 else ' ' for i in text])			
 			self.corpus[question[0]] = documents
 		
 		print("Done parsing documents")
@@ -75,18 +81,50 @@ class QASystem():
 	def sent_index_to_doc_index(self, sent_idexes, len_documents_list):
 		pass
 
+
+
+	# method that converts sentence array indices into document indicies
+	def compute_document_id(self,sentence_idxs,document_lengths):
+		doc_rel_indices = []
+		prev = 0
+		sentence_pos = []
+		for text_length in document_lengths:
+			doc_rel_indices.append(prev+text_length)
+			prev = doc_rel_indices[-1]
+		for idx in sentence_idxs:
+			if idx <= doc_rel_indices[0]:
+				sentence_pos.append(0)
+			elif doc_rel_indices[-2]<=idx:
+				sentence_pos.append(len(doc_rel_indices))
+
+			else:
+				pos = 0
+				while(idx<=doc_rel_indices[pos]):
+					pos = pos+1
+				sentence_pos.append(pos-1)
+		return sentence_pos
+
 	# method that computes the best answers using only passage retrival for each question
 	def compute_answers(self):
+		question_ids = []
+		doc_ids = {}
+		answers_ids = {}
 		for question in self.questions:
+			print("Answering Question: " + str(question[0]))
+			question_ids.append(question[0])
 			all_sentences,doc_sentence_lengths = self.doc_sent_tokenizer(self.corpus[question[0]])
 			top_ten_words,indexes  = self.passage_retrieval(question[1],all_sentences,10)
 
-
+			doc_ids[question[0]] = self.compute_document_id(indexes,doc_sentence_lengths)
+			answers_ids[question[0]] = top_ten_words
+		question_ids.sort()
+		self.create_answers(question_ids,doc_ids,answers_ids)
 
 	# method to compute cosine similiarity of the vector space between the query and documents
 	# assuming query is the first item in the list of documents
 	def passage_retrieval(self, query, corpus, n_items):
 		corpus.insert(0, query)
+		corpus = np.array(corpus)
 		vect = TfidfVectorizer(min_df=1)
 		tfidf = vect.fit_transform(corpus)
 
