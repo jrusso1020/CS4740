@@ -6,6 +6,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.tokenize import sent_tokenize
 import sys
 import codecs
+from nltk.tag.stanford import StanfordNERTagger
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -13,8 +14,24 @@ sys.setdefaultencoding('utf8')
 
 class QASystem():
 	def __init__(self):
+		self.nerTagger =  StanfordNERTagger('stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz',
+					   'stanford-ner/stanford-ner.jar',
+					   encoding='utf-8')
 		self.questions = []
 		self.corpus = {}
+		self.taggedQuestions ={}
+		self.answers_ids = {}
+		self.tagged_passages  = {}
+
+	# tag each question with the expected output type
+	def tag_questions(self):
+		for tup in self.questions:
+			if 'Where' in tup[1]:
+				self.taggedQuestions[tup[0]] = 'LOCATION'
+			elif 'Who' in tup[1]:
+				self.taggedQuestions[tup[0]] = 'PERSON'
+			else:
+				self.taggedQuestions[tup[0]] = 'DATE'
 
 
 	# Parse questions to be answered, store questions in self.questions as
@@ -92,11 +109,17 @@ class QASystem():
 			sum_lengths += doc
 		return doc_ids
 
+
+	def tag_passages(self):
+		for question in self.answers_ids:
+			print('Tagging passages for Question '+str(question))
+			self.tagged_passages[question] = self.nerTagger.tag(self.answers_ids[question])
+
 	# method that computes the best answers using only passage retrival for each question
 	def compute_answers(self):
 		question_ids = []
 		doc_ids = {}
-		answers_ids = {}
+		
 		for question in self.questions:
 			print("Answering Question: " + str(question[0]))
 			question_ids.append(question[0])
@@ -104,9 +127,9 @@ class QASystem():
 			top_ten_words,indexes  = self.passage_retrieval(question[1],all_sentences, 5)
 
 			doc_ids[question[0]] = self.compute_document_id(indexes,doc_sentence_lengths)
-			answers_ids[question[0]] = top_ten_words
+			self.answers_ids[question[0]] = top_ten_words
 		question_ids.sort()
-		self.create_answers(question_ids,doc_ids,answers_ids)
+		self.create_answers(question_ids,doc_ids,self.answers_ids)
 
 	# method to compute cosine similiarity of the vector space between the query and documents
 	# assuming query is the first item in the list of documents
@@ -157,6 +180,7 @@ def main():
 	qa_system.parse_questions('question.txt')
 	qa_system.parse_documents()
 	qa_system.compute_answers()
+	qa_system.tag_passages()
 
 
 
