@@ -115,6 +115,11 @@ class QASystem():
 			print('Tagging passages for Question '+str(question))
 			self.tagged_passages[question] = self.nerTagger.tag(self.answers_ids[question])
 
+	
+
+
+
+
 	# method that computes the best answers using only passage retrival for each question
 	def compute_answers(self):
 		question_ids = []
@@ -124,7 +129,7 @@ class QASystem():
 			print("Answering Question: " + str(question[0]))
 			question_ids.append(question[0])
 			all_sentences,doc_sentence_lengths = self.doc_sent_tokenizer(self.corpus[question[0]])
-			top_ten_words,indexes  = self.passage_retrieval(question[1],all_sentences, 5)
+			top_ten_words,indexes  = self.passage_retrieval(question[1],all_sentences, 20)
 
 			doc_ids[question[0]] = self.compute_document_id(indexes,doc_sentence_lengths)
 			self.answers_ids[question[0]] = top_ten_words
