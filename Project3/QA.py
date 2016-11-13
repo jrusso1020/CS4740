@@ -124,10 +124,11 @@ class QASystem():
 		for question in self.questions:
 			print("Retrieving passages for Question: " + str(question[0]))
 			all_sentences,doc_sentence_lengths = self.doc_sent_tokenizer(self.corpus[question[0]])
-			self.doc_lengths[question] = doc_sentence_lengths
+
+			self.doc_lengths[question[0]] = doc_sentence_lengths
 			top_ten_words,indexes  = self.passage_retrieval2(question[1],all_sentences, numPassages)
 			self.answers_ids[question[0]] = (top_ten_words,indexes.tolist())
-
+		
 
 	def tag_passages(self):
 		for question in self.answers_ids:
@@ -171,23 +172,25 @@ class QASystem():
 
 
 	def compute_answers_NER(self):
-		for question in self.answer_ids:
+		for question in self.answers_ids:
 			answers = []
 			indexes = []
-			for i in xrange(0,5):
-				tagged_passage = self.tagged_passages[question]
+			for i in xrange(0,min(5,len(self.answers_ids[question][1]))):
+				tagged_passage = self.tagged_passages[question][i]
 				answer = ''
 				listTags = []
 				if self.taggedQuestions[question] == 'DATE':
-					listTags.apppend('DATE')
+					listTags.append('DATE')
 				elif self.taggedQuestions[question] == 'PERSON':
 					listTags.append('PERSON')
 				else:
 					listTags.append('LOCATION')
 					listTags.append('ORGANIZATION')
+				print listTags
 				foundAnswer = False
 				scanning = True
 				for word in tagged_passage:
+					print word
 					if not foundAnswer:
 						if word[1] in listTags:
 							foundAnswer	 = True
@@ -195,18 +198,27 @@ class QASystem():
 					else:
 						if scanning:
 							if word[1] in listTags:
-								answer = answer +word[0]
+								answer = answer +' ' +word[0]
 							else:
 								scanning =False
 				
 				answers.append(answer)
+				
 				idx = self.answers_ids[question][1][i]
-				idxFinal = compute_idx(self.doc_lengths[question],idx)
+				
+				idxFinal = self.compute_idx(self.doc_lengths[question],idx)
 				indexes.append(idxFinal)
-			if len(answers)<5:
-				answers = answers + (["nil"] * (5-len(answers)))
-				indexes = indexes + ([1] * (5-len(answers)))
 
+			print answers
+			print indexes
+			if len(answers)<5:
+				indexes = indexes + ([1] * (5-len(answers)))
+				answers = answers + (["nil"] * (5-len(answers)))
+				
+
+			print answers
+			print indexes
+			
 			self.finalAnswers[question] = answers
 			self.finalIdxs[question] = indexes
 
@@ -216,14 +228,19 @@ class QASystem():
 
 
 
-	def compute_idx(doc_lengths,idx):
-		if idx<=doc_lengths[0]:
+	def compute_idx(self,doc_lengths,idx):
+		running_sum = 0
+		rel_lengths = []
+		for length in doc_lengths:
+			running_sum = running_sum+length
+			rel_lengths.append(running_sum)
+		if idx<=rel_lengths[0]:
 			return 1
-		elif doc_lengths[-2]<=idx:
+		elif rel_lengths[-2]<=idx:
 			return len(doc_lengths)
 		else:
 			pos = 0
-			while doc_lengths[pos]<=idx:
+			while rel_lengths[pos]<=idx:
 				pos = pos+1
 			return pos+1
 
