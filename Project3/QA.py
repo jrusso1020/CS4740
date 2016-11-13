@@ -4,6 +4,7 @@ import re
 import os
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.tokenize import sent_tokenize
+from nltk.tokenize import word_tokenize
 import sys
 import codecs
 from nltk.tag.stanford import StanfordNERTagger
@@ -17,11 +18,17 @@ class QASystem():
 		self.nerTagger =  StanfordNERTagger('stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz',
 					   'stanford-ner/stanford-ner.jar',
 					   encoding='utf-8')
+		self.dateTegger = StanfordNERTagger('stanford-ner/classifiers/english.muc.7class.distsim.crf.ser.gz',
+					   'stanford-ner/stanford-ner.jar',
+					   encoding='utf-8')
 		self.questions = []
 		self.corpus = {}
 		self.taggedQuestions ={}
 		self.answers_ids = {}
 		self.tagged_passages  = {}
+		self.finalAnswers = {}
+		self.finalIdxs = {}
+		self.doc_lengths = {}
 
 	# tag each question with the expected output type
 	def tag_questions(self):
@@ -110,12 +117,115 @@ class QASystem():
 		return doc_ids
 
 
+
+
+	# retrieve the top passages for each question. 
+	def retrieve_passages(self,numPassages):
+		for question in self.questions:
+			print("Retrieving passages for Question: " + str(question[0]))
+			all_sentences,doc_sentence_lengths = self.doc_sent_tokenizer(self.corpus[question[0]])
+			self.doc_lengths[question] = doc_sentence_lengths
+			top_ten_words,indexes  = self.passage_retrieval2(question[1],all_sentences, numPassages)
+			self.answers_ids[question[0]] = (top_ten_words,indexes.tolist())
+
+
 	def tag_passages(self):
 		for question in self.answers_ids:
 			print('Tagging passages for Question '+str(question))
-			self.tagged_passages[question] = self.nerTagger.tag(self.answers_ids[question])
+			self.tagged_passages[question] = []
+			for passage in self.answers_ids[question][0]:
+				tagged_passage = ''
+				if self.taggedQuestions[question] == 'DATE':
+					tagged_passage = self.dateTegger.tag(word_tokenize(passage))
+				else:
+					tagged_passage = self.nerTagger.tag(word_tokenize(passage))
+				self.tagged_passages[question].append(tagged_passage)
 
-	
+			#filter out irrelevant passages
+			listTags = []
+			if self.taggedQuestions[question] == 'DATE':
+				listTags.append('DATE')
+			elif self.taggedQuestions[question] == 'PERSON':
+				listTags.append('PERSON')
+			else:
+				listTags.append('LOCATION')
+				listTags.append('ORGANIZATION')
+			passagesToDelete = []
+			for i in xrange(0,len(self.tagged_passages[question])):
+				passage = self.tagged_passages[question][i]
+				
+				isRelevant = False
+				for word in passage:
+					if word[1] in listTags:
+						isRelevant = True
+				if not isRelevant:
+					passagesToDelete.append(i)
+			for i in xrange(len(passagesToDelete)-1,-1,-1):
+				idx = passagesToDelete[i]
+				del self.tagged_passages[question][idx]
+				del self.answers_ids[question][0][idx]
+				del self.answers_ids[question][1][idx]
+
+			
+
+
+
+	def compute_answers_NER(self):
+		for question in self.answer_ids:
+			answers = []
+			indexes = []
+			for i in xrange(0,5):
+				tagged_passage = self.tagged_passages[question]
+				answer = ''
+				listTags = []
+				if self.taggedQuestions[question] == 'DATE':
+					listTags.apppend('DATE')
+				elif self.taggedQuestions[question] == 'PERSON':
+					listTags.append('PERSON')
+				else:
+					listTags.append('LOCATION')
+					listTags.append('ORGANIZATION')
+				foundAnswer = False
+				scanning = True
+				for word in tagged_passage:
+					if not foundAnswer:
+						if word[1] in listTags:
+							foundAnswer	 = True
+							answer = answer + word[0]
+					else:
+						if scanning:
+							if word[1] in listTags:
+								answer = answer +word[0]
+							else:
+								scanning =False
+				
+				answers.append(answer)
+				idx = self.answers_ids[question][1][i]
+				idxFinal = compute_idx(self.doc_lengths[question],idx)
+				indexes.append(idxFinal)
+			if len(answers)<5:
+				answers = answers + (["nil"] * (5-len(answers)))
+				indexes = indexes + ([1] * (5-len(answers)))
+
+			self.finalAnswers[question] = answers
+			self.finalIdxs[question] = indexes
+
+
+		self.create_answers(self.finalIdxs.keys(),self.finalIdxs,self.finalAnswers)
+			
+
+
+
+	def compute_idx(doc_lengths,idx):
+		if idx<=doc_lengths[0]:
+			return 1
+		elif doc_lengths[-2]<=idx:
+			return len(doc_lengths)
+		else:
+			pos = 0
+			while doc_lengths[pos]<=idx:
+				pos = pos+1
+			return pos+1
 
 
 
@@ -129,8 +239,7 @@ class QASystem():
 			print("Answering Question: " + str(question[0]))
 			question_ids.append(question[0])
 			all_sentences,doc_sentence_lengths = self.doc_sent_tokenizer(self.corpus[question[0]])
-			top_ten_words,indexes  = self.passage_retrieval(question[1],all_sentences, 20)
-
+			top_ten_words,indexes  = self.passage_retrieval(question[1],all_sentences, 5)
 			doc_ids[question[0]] = self.compute_document_id(indexes,doc_sentence_lengths)
 			self.answers_ids[question[0]] = top_ten_words
 		question_ids.sort()
@@ -139,6 +248,7 @@ class QASystem():
 	# method to compute cosine similiarity of the vector space between the query and documents
 	# assuming query is the first item in the list of documents
 	def passage_retrieval(self, query, corpus, n_items):
+
 		corpus.insert(0, query)
 		corpus = np.array(corpus)
 		vect = TfidfVectorizer(min_df=1)
@@ -163,6 +273,33 @@ class QASystem():
 
 		return top_ten_words, indexes
 
+
+	def passage_retrieval2(self, query, corpus, n_items):
+		corpus.insert(0, query)
+		corpus = np.array(corpus)
+		vect = TfidfVectorizer(min_df=1)
+		tfidf = vect.fit_transform(corpus)
+
+		similiarity_matrix = (tfidf * tfidf.T).A
+
+		#get just the documents not including query
+		query_doc_similiarities = similiarity_matrix[0, 1:]
+
+
+		indexes = query_doc_similiarities.argsort()[-n_items:][::-1]
+		top_n = corpus[indexes + 1]
+		top_ten_words = []
+		for sent in top_n:
+			split = sent.split()
+			top_ten_words.append(' '.join(split))
+
+		if len(top_ten_words)<5:
+			top_ten_words = top_ten_words + (["nil"] * (5-len(top_ten_words)))
+			indexes = indexes + ([1] * (5-len(top_ten_words)))
+
+		return top_ten_words, indexes
+
+
 	# method to create answer.txt and save it
 	# param: question_ids = one list of all question ids
 	# param: doc_ids = dictionary with list values of document ids for each question, key is the question_id
@@ -183,9 +320,11 @@ class QASystem():
 def main():
 	qa_system = QASystem()
 	qa_system.parse_questions('question.txt')
+	qa_system.tag_questions()
 	qa_system.parse_documents()
-	qa_system.compute_answers()
+	qa_system.retrieve_passages(10)
 	qa_system.tag_passages()
+	qa_system.compute_answers_NER()
 
 
 
