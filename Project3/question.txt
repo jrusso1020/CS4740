@@ -1,1120 +1,1200 @@
+
+
+<top>
+
+<num> Number: 201
+
+<desc> Description:
+Who created "The Muppets"?
+
+</top>
+
+
+<top>
+
+<num> Number: 202
+
+<desc> Description:
+When is Bastille Day?
+
+</top>
+
+
+<top>
+
+<num> Number: 203
+
+<desc> Description:
+Where is Webster University?
+
+</top>
+
+
+<top>
+
+<num> Number: 204
+
+<desc> Description:
+When was John D. Rockefeller born?
+
+</top>
+
+
+<top>
+
+<num> Number: 205
+
+<desc> Description:
+Who was the author of the book about computer hackers called "The Cuckoo's Egg: Tracking a Spy Through the Maze of Computer Espionage"?
+
+</top>
+
+
+<top>
+
+<num> Number: 206
+
+<desc> Description:
+Where are the headquarters of Eli Lilly?
+
+</top>
+
+
+<top>
+
+<num> Number: 207
+
+<desc> Description:
+Where did Hillary Clinton graduate college?
+
+</top>
+
+
 <top>
 
-<num> Number: 89
+<num> Number: 208
 
 <desc> Description:
-Where is Belize located?
+Where is Glasgow?
 
 </top>
 
 
 <top>
 
-<num> Number: 90
+<num> Number: 209
 
 <desc> Description:
-Who invented the paper clip?
+Who was Samuel Johnsons's friend and biographer?
 
 </top>
 
 
 <top>
 
-<num> Number: 91
+<num> Number: 210
 
 <desc> Description:
-Where did bocci originate?
+Who coined the term "cyberspace" in his novel "Neuromancer"?
 
 </top>
 
 
 <top>
 
-<num> Number: 92
+<num> Number: 211
 
 <desc> Description:
-Who invented the electric guitar?
+Who is the president of Bolivia?
 
 </top>
 
 
 <top>
 
-<num> Number: 93
+<num> Number: 212
 
 <desc> Description:
-Who is the leader of India?
+When did the American Civil War end?
 
 </top>
 
 
 <top>
 
-<num> Number: 94
+<num> Number: 213
 
 <desc> Description:
-Who was Whitcomb Judson?
+Who created the character of Scrooge?
 
 </top>
 
 
 <top>
 
-<num> Number: 95
+<num> Number: 214
 
 <desc> Description:
-Who is the prime minister of Australia?
+Who first broke the sound barrier?
 
 </top>
 
 
 <top>
 
-<num> Number: 96
+<num> Number: 215
 
 <desc> Description:
-Who killed Martin Luther King?
+Who provides telephone service in Orange County, California?
 
 </top>
 
 
 <top>
 
-<num> Number: 97
+<num> Number: 216
 
 <desc> Description:
-Who is Anubis?
+Who shot Billy the Kid?
 
 </top>
 
 
 <top>
 
-<num> Number: 98
+<num> Number: 217
 
 <desc> Description:
-Where's Montenegro?
+Who is the monarch of the United Kingdom?
 
 </top>
 
 
 <top>
 
-<num> Number: 99
+<num> Number: 218
 
 <desc> Description:
-Who is the Greek God of the Sea?
+Where is Amsterdam?
 
 </top>
 
 
 <top>
 
-<num> Number: 100
+<num> Number: 219
 
 <desc> Description:
-Where is the Danube? 
+Where did guinea pigs originate?
 
 </top>
 
 
 <top>
 
-<num> Number: 101
+<num> Number: 220
 
 <desc> Description:
-Where does dew come from?
+Where did Woodstock take place?
 
 </top>
 
 
 <top>
 
-<num> Number: 102
+<num> Number: 221
 
 <desc> Description:
-Who is the fastest swimmer in the world?
+Who wrote the book, "The Grinch Who Stole Christmas"?
 
 </top>
 
 
 <top>
 
-<num> Number: 103
+<num> Number: 222
 
 <desc> Description:
-When did the vesuvius last erupt?
+When did Aldous Huxley write, "Brave New World"?
 
 </top>
 
 
 <top>
 
-<num> Number: 104
+<num> Number: 223
 
 <desc> Description:
-Who was the president of Vichy France?
+Who wrote the book, "Song of Solomon"?
 
 </top>
 
 
 <top>
 
-<num> Number: 105
+<num> Number: 224
 
 <desc> Description:
-Who invented television?
+Who portrayed Jake in the television show, "Jake and the Fatman"?
 
 </top>
 
 
 <top>
 
-<num> Number: 106
+<num> Number: 225
 
 <desc> Description:
-Who made the first airplane?
+Who portrayed Fatman in the television show, "Jake and the Fatman"?
 
 </top>
 
 
 <top>
 
-<num> Number: 107
+<num> Number: 226
 
 <desc> Description:
-Who made the first airplane that could fly?
+Where is Venezuela?
 
 </top>
 
 
 <top>
 
-<num> Number: 108
+<num> Number: 227
 
 <desc> Description:
-Who is Coronado?
+Who is the founder of the Wal-Mart stores?
 
 </top>
 
 
 <top>
 
-<num> Number: 109
+<num> Number: 228
 
 <desc> Description:
-Who is Barbara Jordan?
+Who reports the weather on the "Good Morning America" television show?
 
 </top>
 
 
 <top>
 
-<num> Number: 110
+<num> Number: 229
 
 <desc> Description:
-Where did the ukulele originate?
+When did the California lottery begin?
 
 </top>
 
 
 <top>
 
-<num> Number: 111
+<num> Number: 230
 
 <desc> Description:
-Who invented baseball?
+Where is Los Vegas?
 
 </top>
 
 
 <top>
 
-<num> Number: 112
+<num> Number: 231
 
 <desc> Description:
-Where can you find the Venus flytrap?
+When was Beethoven born?
 
 </top>
 
 
 <top>
 
-<num> Number: 113
+<num> Number: 232
 
 <desc> Description:
-Who won the Battle of Gettysburg?
+Where is Tufts University?
 
 </top>
 
 
 <top>
 
-<num> Number: 114
+<num> Number: 233
 
 <desc> Description:
-Where is the Valley of the Kings?
+When did the royal wedding of Prince Andrew and Fergie take place?
 
 </top>
 
 
 <top>
 
-<num> Number: 115
+<num> Number: 234
 
 <desc> Description:
-Where did the Maya people live?
+Who is Henry Butler?
 
 </top>
 
 
 <top>
 
-<num> Number: 116
+<num> Number: 235
 
 <desc> Description:
-When was the first flush toilet invented?
+When was the first Barbie produced?
 
 </top>
 
 
 <top>
 
-<num> Number: 117
+<num> Number: 236
 
 <desc> Description:
-Who is William Wordsworth?
+Where did Wicca first develop?
 
 </top>
 
 
 <top>
 
-<num> Number: 118
+<num> Number: 237
 
 <desc> Description:
-Who thought of teaching people to tie their shoe laces?
+Where are diamonds mined?
 
 </top>
 
 
 <top>
 
-<num> Number: 119
+<num> Number: 238
 
 <desc> Description:
-Who is buried in the great pyramid of Giza?
+When was the NFL established?
 
 </top>
 
 
 <top>
 
-<num> Number: 120
+<num> Number: 239
 
 <desc> Description:
-Where do lobsters like to live?
+Who is Terrence Malick?
 
 </top>
 
 
 <top>
 
-<num> Number: 121
+<num> Number: 240
 
 <desc> Description:
-When was Babe Ruth born?
+Who won the rugby world cup in 1987?
 
 </top>
 
 
 <top>
 
-<num> Number: 122
+<num> Number: 241
 
 <desc> Description:
-Who wrote the Farmer's Almanac?
+Where is Windsor Castle?
 
 </top>
 
 
 <top>
 
-<num> Number: 123
+<num> Number: 242
 
 <desc> Description:
-Where was Pythagoras born?
+Who portrayed "Rosanne Rosanna-Dana" on the television show "Saturday Night Live"?
 
 </top>
 
 
 <top>
 
-<num> Number: 124
+<num> Number: 243
 
 <desc> Description:
-Who killed Caesar?
+When was the bar-code invented?
 
 </top>
 
 
 <top>
 
-<num> Number: 125
+<num> Number: 244
 
 <desc> Description:
-Who was Picasso?
+Who wrote the song, "Silent Night"?
 
 </top>
 
 
 <top>
 
-<num> Number: 126
+<num> Number: 245
 
 <desc> Description:
-Where is the Orinoco?
+Who portrayed "the man without a face" in the movie of the same name?
 
 </top>
 
 
 <top>
 
-<num> Number: 127
+<num> Number: 246
 
 <desc> Description:
-Where are there aborigines?
+When was the Hoover Dam constructed?
 
 </top>
 
 
 <top>
 
-<num> Number: 128
+<num> Number: 247
 
 <desc> Description:
-Who was the first U.S. president ever to resign?
+When is the Tulip Festival in Michigan?
 
 </top>
 
 
 <top>
 
-<num> Number: 129
+<num> Number: 248
 
 <desc> Description:
-Who invented the game Scrabble?
+Who created the character James Bond?
 
 </top>
 
 
 <top>
 
-<num> Number: 130
+<num> Number: 249
 
 <desc> Description:
-Who was Lacan?
+Where is the Thomas Edison Museum?
 
 </top>
 
 
 <top>
 
-<num> Number: 131
+<num> Number: 250
 
 <desc> Description:
-When did Geraldine Ferraro run for vice president?
+Where did yoga originate?
 
 </top>
 
 
 <top>
 
-<num> Number: 132
+<num> Number: 251
 
 <desc> Description:
-Where is Ayer's rock?
+When did World War I start?
 
 </top>
 
 
 <top>
 
-<num> Number: 133
+<num> Number: 252
 
 <desc> Description:
-When was the first railroad from the east coast to the west coast completed?
+Who owns the St. Louis Rams?
 
 </top>
 
 
 <top>
 
-<num> Number: 134
+<num> Number: 253
 
 <desc> Description:
-Who is Desmond Tutu?
+Where could I go to take a ride on a steam locomotive?
 
 </top>
 
 
 <top>
 
-<num> Number: 135
+<num> Number: 254
 
 <desc> Description:
-When was Hurricane Hugo?
+When was the movie, Caligula, made?
 
 </top>
 
 
 <top>
 
-<num> Number: 136
+<num> Number: 255
 
 <desc> Description:
-When did the Carolingian period begin? 
+Where is Burma?
 
 </top>
 
 
 <top>
 
-<num> Number: 137
+<num> Number: 256
 
 <desc> Description:
-Who found Hawaii?
+Who wrote the song, "Boys of Summer"?
 
 </top>
 
 
 <top>
 
-<num> Number: 138
+<num> Number: 257
 
 <desc> Description:
-Who is the richest person in the world?
+When did the neanderthal man live?
 
 </top>
 
 
 <top>
 
-<num> Number: 139
+<num> Number: 258
 
 <desc> Description:
-Who was the first coach of the Cleveland Browns?
+Who manufactures the software, "PhotoShop"?
 
 </top>
 
 
 <top>
 
-<num> Number: 140
+<num> Number: 259
 
 <desc> Description:
-Who is the prophet of the religion of Islam?
+Who was the first woman in space?
 
 </top>
 
 
 <top>
 
-<num> Number: 141
+<num> Number: 260
 
 <desc> Description:
-Where is Tornado Alley?
+When was Nostradamus born?
 
 </top>
 
 
 <top>
 
-<num> Number: 142
+<num> Number: 261
 
 <desc> Description:
-Where do hyenas live?
+When was "the Great Depression"?
 
 </top>
 
 
 <top>
 
-<num> Number: 143
+<num> Number: 262
 
 <desc> Description:
-Who is Peter Weir?
+Who created the comic strip, "Garfield"?
 
 </top>
 
 
 <top>
 
-<num> Number: 144
+<num> Number: 263
 
 <desc> Description:
-Who was Buffalo Bill?
+Where is the Isle of Man?
 
 </top>
 
 
 <top>
 
-<num> Number: 145
+<num> Number: 264
 
 <desc> Description:
-Where is the bridge over the river Kwai?
+Who wrote the book, "Huckleberry Finn"?
 
 </top>
 
 
 <top>
 
-<num> Number: 146
+<num> Number: 265
 
 <desc> Description:
-Who was the architect of Central Park?
+Who wrote "The Scarlet Letter"?
 
 </top>
 
 
 <top>
 
-<num> Number: 147
+<num> Number: 266
 
 <desc> Description:
-Who invented paper?
+When did the Chernobyl nuclear accident occur?
 
 </top>
 
 
 <top>
 
-<num> Number: 148
+<num> Number: 267
 
 <desc> Description:
-Where is Guam?
+Who won the nobel prize in literature in 1988?
 
 </top>
 
 
 <top>
 
-<num> Number: 149
+<num> Number: 268
 
 <desc> Description:
-Where did Bill Gates go to college?
+Who wrote "The Pit and the Pendulum"?
 
 </top>
 
 
 <top>
 
-<num> Number: 150
+<num> Number: 269
 
 <desc> Description:
-Where is Romania located?
+Who manufacturers Magic Chef applicances?
 
 </top>
 
 
 <top>
 
-<num> Number: 151
+<num> Number: 270
 
 <desc> Description:
-When was the De Beers company founded?
+When was the first Wall Street Journal published?
 
 </top>
 
 
 <top>
 
-<num> Number: 152
+<num> Number: 271
 
 <desc> Description:
-Who was the first king of England?
+Who's the lead singer of the Led Zeppelin band?
 
 </top>
 
 
 <top>
 
-<num> Number: 153
+<num> Number: 272
 
 <desc> Description:
-Who is the richest woman in the world?
+Who wrote "An Ideal Husband"?
 
 </top>
 
 
 <top>
 
-<num> Number: 154
+<num> Number: 273
 
 <desc> Description:
-When was the San Francisco fire?
+When did the Dow first reach 2000?
 
 </top>
 
 
 <top>
 
-<num> Number: 155
+<num> Number: 274
 
 <desc> Description:
-When was the slinky invented?
+Who was Charles Lindbergh's wife?
 
 </top>
 
 
 <top>
 
-<num> Number: 156
+<num> Number: 275
 
 <desc> Description:
-When was Microsoft established?
+Who is Secretary-General of the United Nations?
 
 </top>
 
 
 <top>
 
-<num> Number: 157
+<num> Number: 276
 
 <desc> Description:
-Who invented basketball?
+Who played the teacher in Dead Poet's Society?
 
 </top>
 
 
 <top>
 
-<num> Number: 158
+<num> Number: 277
 
 <desc> Description:
-Who is Zebulon Pike?
+Where was Tesla born?
 
 </top>
 
 
 <top>
 
-<num> Number: 159
+<num> Number: 278
 
 <desc> Description:
-Who was considered to be the father of psychology?
+Who started the Dominos Pizza chain?
 
 </top>
 
 
 <top>
 
-<num> Number: 160
+<num> Number: 279
 
 <desc> Description:
-Who is Langston Hughes?
+Where is Kings Canyon?
 
 </top>
 
 
 <top>
 
-<num> Number: 161
+<num> Number: 280
 
 <desc> Description:
-Who was Monet?
+Where is the Mayo Clinic?
 
 </top>
 
 
 <top>
 
-<num> Number: 162
+<num> Number: 281
 
 <desc> Description:
-Who built the first pyramid?
+Where does Mother Angelica live?
 
 </top>
 
 
 <top>
 
-<num> Number: 163
+<num> Number: 282
 
 <desc> Description:
-Who is Charles Lindbergh?
+Who was the founding member of the Pink Floyd band?
 
 </top>
 
 
 <top>
 
-<num> Number: 164
+<num> Number: 283
 
 <desc> Description:
-Who invented the game bowling?
+When did the art of quilting begin?
 
 </top>
 
 
 <top>
 
-<num> Number: 165
+<num> Number: 284
 
 <desc> Description:
-Where does chocolate come from?
+When did Amtrak begin operations?
 
 </top>
 
 
 <top>
 
-<num> Number: 166
+<num> Number: 285
 
 <desc> Description:
-Where is Melbourne?
+Where is the Smithsonian Institute located?
 
 </top>
 
 
 <top>
 
-<num> Number: 167
+<num> Number: 286
 
 <desc> Description:
-Who won the Superbowl in 1982?
+Who manufactures synthroid?
 
 </top>
 
 
 <top>
 
-<num> Number: 168
+<num> Number: 287
 
 <desc> Description:
-Where is Trinidad?
+Who was the oldest U.S. president?
 
 </top>
 
 
 <top>
 
-<num> Number: 169
+<num> Number: 288
 
 <desc> Description:
-Where did the Inuits live?
+Who was the tallest U.S. president?
 
 </top>
 
 
 <top>
 
-<num> Number: 170
+<num> Number: 289
 
 <desc> Description:
-When was the Triangle Shirtwaist fire?
+Where is Santa Lucia?
 
 </top>
 
 
 <top>
 
-<num> Number: 171
+<num> Number: 290
 
 <desc> Description:
-Where is the Kalahari desert?
+Where is Ocho Rios?
 
 </top>
 
 
 <top>
 
-<num> Number: 172
+<num> Number: 291
 
 <desc> Description:
-Who was the 33rd president of the United States?
+Where is Procter & Gamble headquartered in the U.S.?
 
 </top>
 
 
 <top>
 
-<num> Number: 173
+<num> Number: 292
 
 <desc> Description:
-Who is the emperor of Japan?
+Where is Procter & Gamble based in the U.S.?
 
 </top>
 
 
 <top>
 
-<num> Number: 174
+<num> Number: 293
 
 <desc> Description:
-Who assassinated President McKinley?
+Who was the first Russian astronaut to walk in space?
 
 </top>
 
 
 <top>
 
-<num> Number: 175
+<num> Number: 294
 
 <desc> Description:
-When did Muhammad live?
+Who was the first Russian to do a spacewalk?
 
 </top>
 
 
 <top>
 
-<num> Number: 176
+<num> Number: 295
 
 <desc> Description:
-Who invented the radio?
+When did CNN begin broadcasting?
 
 </top>
 
 
 <top>
 
-<num> Number: 177
+<num> Number: 296
 
 <desc> Description:
-Where are zebras most likely found?
+When did CNN go on the air?
 
 </top>
 
 
 <top>
 
-<num> Number: 178
+<num> Number: 297
 
 <desc> Description:
-Who was the 21st U.S. President?
+Who is the owner of CNN?
 
 </top>
 
 
 <top>
 
-<num> Number: 179
+<num> Number: 298
 
 <desc> Description:
-Where was John Adams born?
+Who developed potlatch?
 
 </top>
 
 
 <top>
 
-<num> Number: 180
+<num> Number: 299
 
 <desc> Description:
-Who painted Olympia?
+Where is Logan Airport?
 
 </top>
 
 
 <top>
 
-<num> Number: 181
+<num> Number: 300
 
 <desc> Description:
-Who was Quetzalcoatl?
+When was Dick Clark born?
 
 </top>
 
 
 <top>
 
-<num> Number: 182
+<num> Number: 301
 
 <desc> Description:
-Where is your corpus callosum?
+When is Dick Clark's birthday?
 
 </top>
 
 
 <top>
 
-<num> Number: 183
+<num> Number: 302
 
 <desc> Description:
-Who invented silly putty?
+Where is Poe's birthplace?
 
 </top>
 
 
 <top>
 
-<num> Number: 184
+<num> Number: 303
 
 <desc> Description:
-When was the Brandenburg Gate in Berlin built?
+Who was the king who was forced to agree to the Magna Carta?
 
 </top>
 
 
 <top>
 
-<num> Number: 185
+<num> Number: 304
 
 <desc> Description:
-When is Boxing Day?
+Who was the king who signed the Magna Carta?
 
 </top>
 
 
 <top>
 
-<num> Number: 186
+<num> Number: 305
 
 <desc> Description:
-Who was Maria Theresa?
+Where is one's corpus callosum found?
 
 </top>
 
 
 <top>
 
-<num> Number: 187
+<num> Number: 306
 
 <desc> Description:
-Who used to make cars with rotary engines?
+Who was the inventor of silly putty?
 
 </top>
 
 
 <top>
 
-<num> Number: 188
+<num> Number: 307
 
 <desc> Description:
-Where are the U.S. headquarters for Procter & Gamble?
+When was Berlin's Brandenburg gate erected?
 
 </top>
 
 
 <top>
 
-<num> Number: 189
+<num> Number: 308
 
 <desc> Description:
-When was CNN's first broadcast?
+Where is McCarren Airport located?
 
 </top>
 
 
 <top>
 
-<num> Number: 190
+<num> Number: 309
 
 <desc> Description:
-Who owns CNN?
+Who invented "The Muppets"?
 
 </top>
 
 
 <top>
 
-<num> Number: 191
+<num> Number: 310
 
 <desc> Description:
-Who was Jane Goodall?
+Who is the creator of "The Muppets"?
 
 </top>
 
 
 <top>
 
-<num> Number: 192
+<num> Number: 311
 
 <desc> Description:
-When did Princess Diana and Prince Charles get married?
+Who is Colin Powell?
 
 </top>
 
 
 <top>
 
-<num> Number: 193
+<num> Number: 312
 
 <desc> Description:
-Where is Logan International located?
+Where is the Orange Bowl?
 
 </top>
 
 
 <top>
 
-<num> Number: 194
+<num> Number: 313
 
 <desc> Description:
-Where is Basque country located?
+When did Mount St. Helens last erupt?
 
 </top>
 
 
 <top>
 
-<num> Number: 195
+<num> Number: 314
 
 <desc> Description:
-Who was Darth Vader's son?
+When did Mount St. Helen last have a major eruption?
 
 </top>
 
 
 <top>
 
-<num> Number: 196
+<num> Number: 315
 
 <desc> Description:
-Where was Poe born?
+When did Mount St. Helen last have a significant eruption?
 
 </top>
 
 
 <top>
 
-<num> Number: 197
+<num> Number: 316
 
 <desc> Description:
-Where is the location of the Orange Bowl?
+Where can one find Rider College?
 
 </top>
 
 
 <top>
 
-<num> Number: 198
+<num> Number: 317
 
 <desc> Description:
-When was the last major eruption of Mount St. Helens?
+Where is Rider College?
 
 </top>
 
 
 <top>
 
-<num> Number: 199
+<num> Number: 318
 
 <desc> Description:
-Where is Rider College located?
+Where is the Kentucky Horse Park located?
 
 </top>
 
 
 <top>
 
-<num> Number: 200
+<num> Number: 319
 
 <desc> Description:
-Where is McCarren Airport?
+Where is the Kentucky Horse Park?
 
 </top>
+
+
+<top>
+
+<num> Number: 320
 
+<desc> Description:
+Who made the rotary engine automobile?
 
+</top>

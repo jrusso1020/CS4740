@@ -1,0 +1,560 @@
+89 19 Foreign Ministry
+89 82 Mexico
+89 44 Belize
+89 37 Belize City
+89 1 nil
+90 54 David
+90 1 Colvin
+90 6 Dickson
+90 1 nil
+90 1 nil
+91 28 Los Gatos Bocci Ball Association
+91 26 Austria
+91 22 Austria
+91 22 Air Power
+91 1 nil
+92 2 Robert Johnson
+92 13 Adolph Rickenbacker
+92 44 DiMeola
+92 8 Alvino Rey
+92 50 Segovia
+93 11 Dalai Lama
+93 6 Dalai Lama
+93 94 Panchen Lama
+93 94 Dalai Lama
+93 7 Dalai Lama
+94 1 Judson
+94 62 Edgar D. Whitcomb
+94 5 Edgar Whitcomb
+94 29 Judson Welliver
+94 63 Cynthia Whitcomb
+95 21 Keating
+95 13 Paul Keating
+95 99 Khamtai Siphandon
+95 40 Vo Van Kiet
+95 52 Khamtai Siphandon
+96 62 Martin Luther King Jr
+96 22 Martin Luther King Jr
+96 99 Martin Luther King Jr.
+96 35 Martin Luther King Jr.
+96 26 Martin Luther King Jr.
+97 3 Tom Cairns
+97 1 Anubis Warpus
+97 1 Jacek Lentz
+97 4 Moshinsky
+97 1 nil
+98 77 Kumrovec
+98 77 Cyprus
+98 41 London
+98 31 Seselj Threatens Muslims
+98 80 Bosnia-Herzegovina
+99 69 Jesus Christ
+99 19 Jesus Christ
+99 10 Myra
+99 1 nil
+99 1 nil
+100 50 Danube
+100 65 Danube
+100 70 Slovakia
+100 79 EC
+100 58 Romania
+101 10 UK
+101 67 Fullerton
+101 1 nil
+101 1 nil
+101 1 nil
+102 10 Sanders
+102 10 Sanders
+102 49 Karli
+102 51 Ballatore
+102 34 Wiese
+103 4 1944
+103 14 last summer
+103 43 1980
+103 41 1980
+103 87 1966
+104 8 Rene Monory
+104 3 Vichy
+104 2 Mitterrand
+104 82 Pierre Laval
+104 79 Pierre Laval
+105 5 Parker
+105 14 Walter Bruch
+105 14 Bruch
+105 46 Takayanagi
+105 63 Fred Allen
+106 100 Daniel Tellep
+106 60 Bush
+106 65 Sununu
+106 1 nil
+106 1 nil
+107 83 Blackmore
+107 1 nil
+107 1 nil
+107 1 nil
+107 1 nil
+108 20 Coronado
+108 39 Coronado
+108 49 Coronado
+108 5 Mary Herron
+108 30 Coronado
+109 32 Bob Jordan
+109 64 Barbara Jordan
+109 20 Barbara Jordan
+109 45 Lloyd Bentsen
+109 33 Barbara Jordan
+110 1 nil
+110 1 nil
+110 1 nil
+110 1 nil
+110 1 nil
+111 1 Abner Doubleday
+111 1 nil
+111 1 nil
+111 1 nil
+111 1 nil
+112 9 Magellan
+112 30 Magellan
+112 8 U.S.
+112 1 nil
+112 1 nil
+113 1 Pickett
+113 3 Pickett
+113 1 North
+113 92 Thomas
+113 96 Thomas
+114 2 Kings
+114 30 Carnarvon
+114 74 U.S
+114 48 Kings
+114 30 London
+115 63 Latin America
+115 1 nil
+115 1 nil
+115 1 nil
+115 1 nil
+116 1 nil
+116 1 nil
+116 1 nil
+116 1 nil
+116 1 nil
+117 9 Wordsworth
+117 38 Coleridge
+117 61 William Wordsworth
+117 89 Wordsworth
+117 9 William Wordsworth
+118 29 Wideman
+118 72 Wessel
+118 13 Kester
+118 1 nil
+118 1 nil
+119 8 Chephren
+119 7 Giza Plateau
+119 12 Chephren
+119 5 Hassan
+119 1 nil
+120 10 Caribbean
+120 1 nil
+120 1 nil
+120 1 nil
+120 1 nil
+121 13 1927
+121 47 1948
+121 8 Tuesday
+121 1 nil
+121 1 nil
+122 5 Hale
+122 3 Witham Smith
+122 1 nil
+122 1 nil
+122 1 nil
+123 13 Lynn
+123 53 Vienna
+123 48 France
+123 1 nil
+123 1 nil
+124 92 Caesar
+124 86 Caesar
+124 66 Donald J. Trump
+124 99 Julius Caesar
+124 66 Stephen Hyde
+125 34 Picasso
+125 37 Picasso
+125 27 Picasso
+125 41 Van Gogh
+125 48 Picasso
+126 87 Orinoco River
+126 3 PowerGen
+126 1 nil
+126 1 nil
+126 1 nil
+127 50 Willeroo
+127 62 America
+127 1 nil
+127 1 nil
+127 1 nil
+128 71 Mecham
+128 99 John C. Calhoun
+128 62 Martineau
+128 59 Richard Nixon
+128 62 Aristide
+129 70 Colvin
+129 40 Scorsese
+129 1 nil
+129 1 nil
+129 1 nil
+130 64 Jean-Francois Lacan
+130 64 Lacan
+130 64 Lacan
+130 64 Pelat
+130 64 Lacan
+131 96 1984
+131 75 October 1984
+131 24 1984
+131 60 1984
+131 2 1984
+132 53 Fort Devens
+132 6 Australia
+132 4 Chamberlains
+132 4 Ayers Rock
+132 1 nil
+133 1 nil
+133 1 nil
+133 1 nil
+133 1 nil
+133 1 nil
+134 9 Desmond Tutu
+134 19 Tutu
+134 75 Desmond Tutu
+134 82 Desmond Tutu
+134 3 Desmond Tutu
+135 70 Thursday
+135 28 June 1
+135 60 Monday
+135 26 1956
+135 1 nil
+136 8 1519
+136 3 spring
+136 62 1985
+136 1 nil
+136 1 nil
+137 93 James Jones
+137 33 Ettore DiVito
+137 54 Rashid
+137 93 Hendrick
+137 1 nil
+138 18 Walton
+138 5 Fortune
+138 46 Taikichiro Mori
+138 56 Forbes
+138 1 nil
+139 59 Marty Schottenheimer
+139 15 Carson
+139 93 Bill Belichick
+139 34 Dan Henning
+139 62 Jim Shofner
+140 9 Jahilia
+140 70 Mohammed
+140 26 Mohammed
+140 9 Mohammed
+140 73 Mohammed
+141 2 Will County
+141 3 Will County
+141 1 Chicago
+141 12 Wichita
+141 4 Chicago
+142 1 Kenya
+142 1 nil
+142 1 nil
+142 1 nil
+142 1 nil
+143 4 Peter Weir
+143 17 Peter Weir
+143 16 Peter Weir
+143 21 Peter Weir
+143 20 Peter Weir
+144 31 Bill Cody
+144 92 Bill
+144 92 Buffalo Bill
+144 71 Bill
+144 1 Buffalo Bill
+145 29 River Kwai
+145 13 Atlanta Journal
+145 79 River Kwai
+145 11 River Kwai Railroad
+145 42 River Kwai
+146 7 Robert Stern
+146 14 William Hebbard
+146 48 Victor Steinbrueck
+146 1 nil
+146 1 nil
+147 62 Eric Lauritzen
+147 1 nil
+147 1 nil
+147 1 nil
+147 1 nil
+148 73 Guam
+148 92 Guam
+148 29 Matthews & amp
+148 59 U.S.
+148 11 Andersen Air Force Base
+149 6 Microsoft
+149 73 Microsoft
+149 39 Microsoft
+149 71 Atlanta
+149 66 Atlanta
+150 68 Indianapolis
+150 1 Netherlands
+150 3 Transylvania
+150 87 Gazprom
+150 2 Romania
+151 40 1991
+151 14 Thursday
+151 72 August
+151 70 1992
+151 1 nil
+152 82 John Goodman
+152 14 Henry VIII
+152 10 Henry VIII
+152 12 Henry VIII
+152 11 Henry VIII
+153 2 Elizabeth II
+153 1 nil
+153 1 nil
+153 1 nil
+153 1 nil
+154 33 April 18
+154 54 Tuesday
+154 8 1906
+154 1 nil
+154 1 nil
+155 10 1960
+155 1 nil
+155 1 nil
+155 1 nil
+155 1 nil
+156 17 1987
+156 47 1975
+156 1 nil
+156 1 nil
+156 1 nil
+157 4 Mikan
+157 10 Naismith
+157 28 Paul Brown
+157 9 Ralph Miller
+157 1 nil
+158 55 Wendell
+158 1 Zebulon Pike
+158 2 Zebulon Pike
+158 36 Pike
+158 30 Pike
+159 3 Herman
+159 61 Fraser
+159 20 Johnson
+159 1 nil
+159 1 nil
+160 4 Langston Hughes
+160 23 Langston Hughes
+160 98 Langston Hughes
+160 8 Langston Hughes
+160 17 Hughes
+161 60 Norman Lamont
+161 65 Margaret Thatcher
+161 71 Alexandre Lamfalussy
+161 52 Haller
+161 86 Delors
+162 36 Sidney Shlenker
+162 24 King Zoser
+162 29 Pei
+162 96 Pei
+162 37 Philippe Auguste
+163 24 Charles Lindbergh
+163 23 Charles Lindbergh
+163 39 Charles Lindbergh
+163 6 Charles Lindbergh
+163 2 Le Bourget
+164 60 Don Andersen
+164 40 Curry
+164 1 nil
+164 1 nil
+164 1 nil
+165 94 Mexican
+165 60 UK
+165 1 nil
+165 1 nil
+165 1 nil
+166 43 Melbourne
+166 28 Melbourne Cup
+166 15 Melbourne
+166 13 Melbourne
+166 28 Suzuka
+167 55 Gibbs
+167 12 Wayne Sevier
+167 1 nil
+167 1 nil
+167 1 nil
+168 79 Trinidad
+168 33 Trinidad
+168 23 Trinidad
+168 19 Atlantic
+168 90 Trinidad and Tobago
+169 76 Crees
+169 25 Atlantic
+169 8 Alaska
+169 12 Alaska
+169 1 nil
+170 51 1911
+170 35 March 25 , 1911
+170 39 March 25 , 1911
+170 63 1911
+170 2 Sunday
+171 26 Botswana
+171 9 Botswana
+171 53 Kalahari Desert
+171 8 Kalahari Desert
+171 6 Kalahari Desert
+172 12 Ronald Reagan
+172 88 Martin Van Buren
+172 37 Oliver North
+172 62 Dwight D. Eisenhower
+172 79 Lyndon B. Johnson
+173 10 Jimmu
+173 85 Akihito
+173 47 Kawashima
+173 70 Tsutomu Hata
+173 27 Hirohito
+174 56 John Wilkes Booth
+174 46 Roosevelt
+174 18 McKinley
+174 28 Theodore Roosevelt
+174 26 Theodore Roosevelt
+175 1 nil
+175 1 nil
+175 1 nil
+175 1 nil
+175 1 nil
+176 58 Kane
+176 4 Hughes
+176 15 Kennedy
+176 62 Wichinsky
+176 51 Kuznetsov
+177 27 Great Lakes
+177 27 Europe
+177 63 Canada
+177 1 nil
+177 1 nil
+178 3 Chester A. Arthur
+178 6 Chester A. Arthur
+178 8 Chester A. Arthur
+178 59 Chester Arthur
+178 14 Bishara Khoury
+179 66 Norfolk County
+179 73 Quincy
+179 73 Braintree
+179 60 Grossmont
+179 1 nil
+180 74 Olympia
+180 36 Luis Jimenez
+180 9 Paul Wunderlich
+180 45 Picasso
+180 30 Twitchell
+181 30 Jesus Carrillo
+181 3 Jo Bond
+181 3 Michael San Roman
+181 7 Childress
+181 3 Carlos
+182 20 Supreme Court
+182 81 House
+182 1 nil
+182 1 nil
+182 1 nil
+183 85 Newell
+183 2 Smith
+183 1 nil
+183 1 nil
+183 1 nil
+184 7 1961
+184 3 1961
+184 7 1961
+184 4 1961
+184 91 Nov. 9
+185 18 Sunday
+185 16 Sunday
+185 16 Saturday
+185 16 Saturday
+185 4 Today
+186 21 Tosaya
+186 84 Lozoya
+186 84 Otoniel
+186 34 Cristina
+186 31 Cristina
+187 53 Sue Anderson
+187 1 nil
+187 1 nil
+187 1 nil
+187 1 nil
+188 79 Procter & amp ; Gamble Co.
+188 60 P & amp
+188 85 Procter & amp
+188 8 Procter & amp
+188 91 Procter & amp
+189 1 Today
+189 1 nil
+189 1 nil
+189 1 nil
+189 1 nil
+190 93 Haworth
+190 36 Korn
+190 83 Rick Salcedo
+190 1 nil
+190 1 nil
+191 22 Jane Goodall
+191 35 Everest
+191 34 Jane Goodall
+191 8 Jane Goodall
+191 7 Jane Goodall
+192 24 1981
+192 40 1985
+192 38 Wednesday
+192 39 Thursday
+192 1 nil
+193 92 Stapleton
+193 69 Logan
+193 23 Logan International Airport
+193 88 Phoenix Sky Harbor International
+193 73 Boston Logan International Airport
+194 48 Guipuzcoa
+194 34 Lejona
+194 29 ETA
+194 2 PSE
+194 54 Spain
+195 37 Bill
+195 1 Jones
+195 47 Darth Vader
+195 58 Darth Vader
+195 26 Darth Vader
+196 86 Boston
+196 85 Boston
+196 3 Boston
+196 8 Boston
+196 1 nil
+197 70 Colorado
+197 28 Oklahoma
+197 9 Buffaloes
+197 1 nil
+197 1 nil
+198 52 1965
+198 47 1980
+198 1 nil
+198 1 nil
+198 1 nil
+199 74 El Camino College
+199 51 PACIFIC
+199 11 Philadelphia-New Jersey
+199 8 Foothill Conference
+199 13 Crenshaw Blvd.
+200 28 McCarren International Airport
+200 69 Las Vegas
+200 13 Tele-Trip Co.
+200 76 Vermont Public Service Board
+200 49 New England Telephone Co.
