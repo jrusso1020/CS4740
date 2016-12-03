@@ -1,4 +1,4 @@
-mport glob
+import glob
 import sys
 import nltk
 import numpy as np
@@ -179,8 +179,8 @@ class POStagger():
     features.append(tokens[idx].split()[0])
     for i in range(idx-rangeLength,idx+rangeLength):
       features.append(tokens[i%len(tokens)].split()[1])
-      
-    return features 
+
+    return features
 
   def get_features_1(self,tokens,idx):
     features = []
@@ -197,13 +197,13 @@ class POStagger():
   def get_features(self,tokens,idx):
     rangeLength = 2
     features = []
-    
+
     for i in range(idx-rangeLength,idx+rangeLength):
       features.append(tokens[i%len(tokens)].split()[0])
       features.append(tokens[i%len(tokens)].split()[1])
 
 
-    return features 
+    return features
 
   # post processer on the sentence level for determing which sentences have uncertainty
   def sentence_post_processing(self, test, predicted):
@@ -340,10 +340,10 @@ def experiments():
   tagger.hmm_train()
   tagger.crf_train()
   tagger.perceptron_train()
-  
 
-  self testing results
- 
+
+  # self testing results
+
 
   hmm_test = tagger.hmm_predict(tagger.val_test_lines)
 
@@ -351,7 +351,7 @@ def experiments():
 
   perc_test = tagger.perceptron_predict(tagger.val_test_lines)
 
- 
+
 
   hmm_test_ranges = tagger.spanRanges(hmm_test)
   hmm_test_sent = tagger.sentence_post_processing("", hmm_test)
@@ -366,7 +366,7 @@ def experiments():
   test_answers_span = tagger.spanRanges(tagger.val_test_lines_answers)
   test_answers_sent = tagger.sentence_post_processing("", tagger.val_test_lines_answers)
 
- 
+
   dictExperiment(tagger,test_answers_sent,test_answers_span)
 
 
