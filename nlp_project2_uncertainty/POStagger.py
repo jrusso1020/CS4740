@@ -2,18 +2,21 @@ import glob
 import sys
 import nltk
 import numpy as np
+import gensim
 
 class POStagger():
   def __init__(self):
     self.train_lines = []
     self.hmmtrainer = nltk.tag.HiddenMarkovModelTrainer()
     self.hmmtagger = None
-    self.crftagger = nltk.tag.CRFTagger(feature_func = self.get_features)
+    self.crftagger = nltk.tag.CRFTagger(feature_func = self.get_word_embedding_feature)
     self.perceptrontagger = nltk.tag.perceptron.PerceptronTagger(load=False)
     self.baseline_dictionary = {}
     self.val_train_lines = []
     self.val_test_lines_answers = []
     self.val_test_lines = []
+    self.token_embedding = gensim.models.Word2Vec.load('word2vecmodel')
+    self.word_embedding = gensim.models.Word2Vec.load('justwordsmodel')
 
   # parse the training directory putting BIO CUE's for all CUES
   def parse_training_files(self, directory):
@@ -201,6 +204,16 @@ class POStagger():
     for i in range(idx-rangeLength,idx+rangeLength):
       features.append(tokens[i%len(tokens)].split()[0])
       features.append(tokens[i%len(tokens)].split()[1])
+
+
+    return features
+
+  def get_word_embedding_feature(self, tokens, idx):
+    features = []
+    features.append(tokens[idx].split()[0])
+    for vec in self.word_embedding[tokens[idx].split()[0]]:
+      features.append(str(vec))
+
 
 
     return features
